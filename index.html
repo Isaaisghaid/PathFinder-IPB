@@ -51,6 +51,50 @@
       stroke-dashoffset: 1000;
       animation: walkFootprints 6s linear infinite;
     }
+
+    <style>
+  /* Perbaikan Otomatis Tampilan Mobile (HP) */
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    /* Perkecil padding container besar agar konten lega di HP */
+    section, header, footer, main {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+
+    /* Paksa semua grid multi-kolom menjadi 1 kolom vertikal di HP */
+    .grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Rapikan ukuran judul besar agar tidak terpotong */
+    h1 {
+      font-size: 1.85rem !important;
+      line-height: 1.25 !important;
+    }
+    h2 {
+      font-size: 1.45rem !important;
+      line-height: 1.3 !important;
+    }
+
+    /* Pastikan popup chat & modal pas memenuhi layar HP dengan rapi */
+    #chatModal > div,
+    [id*="Modal"] > div {
+      width: 94% !important;
+      max-width: 94% !important;
+      margin: 12px auto !important;
+    }
+  }
+</style>
   </style>
 </head>
 <body style="margin: 0; padding: 0;" class="w-full relative flex flex-col justify-between bg-pattern text-[#2D4059] font-sans antialiased">
@@ -329,9 +373,6 @@
     <!-- ========================================== -->
     <!-- SEKSI 3: REKOMENDASI                       -->
     <!-- ========================================== -->
-    <!-- ============================================================== -->
-<!-- SEKSI 3: REKOMENDASI (EDITORIAL KAMPUS & TERINTEGRASI DATA)    -->
-<!-- ============================================================== -->
 <section id="tab-rekomendasi" class="hidden max-w-6xl mx-auto my-10 px-4 md:px-6 relative z-10">
   
   <!-- KARTU RINGKASAN PROFIL BAKAT -->
