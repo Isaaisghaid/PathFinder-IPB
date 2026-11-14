@@ -1,71 +1,120 @@
-/* KHUSUS TAMPILAN MOBILE (LAYAR <= 768px) - TIDAK BERPENGARUH DI LAPTOP */
+/* KHUSUS TAMPILAN MOBILE (LAYAR <= 768px) - TIDAK MENGUBAH TAMPILAN LAPTOP */
 @media (max-width: 768px) {
   html, body {
     max-width: 100%;
     overflow-x: hidden;
   }
 
-  /* 1. Navbar atas: slogan di baris 1, menu & 2 tombol kuning sejajar rapi di baris 2 */
+  /* 1. NAVBAR ATAS (Screenshot 3): Slogan di kiri, 4 menu sejajar rapi 1 baris di kanan */
   header, nav {
-    padding: 10px 12px !important;
-    margin: 8px !important;
+    padding: 8px 10px !important;
+    margin: 8px 10px !important;
   }
   header > div, nav > div {
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 6px !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 4px !important;
   }
   header > div > *:first-child,
   nav > div > *:first-child {
-    width: 100% !important;
-    text-align: center !important;
-    font-size: 11px !important;
-    margin-bottom: 4px !important;
+    width: auto !important;
+    text-align: left !important;
+    font-size: 8.5px !important;
+    white-space: nowrap !important;
+    margin-bottom: 0 !important;
   }
   header a, header button, nav a, nav button {
-    font-size: 10.5px !important;
-    padding: 5px 8px !important;
+    font-size: 8.5px !important;
+    padding: 4px 6px !important;
     white-space: nowrap !important;
   }
 
-  /* 2. Hero Section: ukuran judul enak dibaca */
+  /* 2. TOMBOL HERO (Screenshot 3): Finder's partner & Search Your Path sejajar rapi */
   h1 {
-    font-size: 1.75rem !important;
+    font-size: 1.65rem !important;
     line-height: 1.2 !important;
   }
-  h2 {
-    font-size: 1.35rem !important;
-    line-height: 1.25 !important;
+  h1 ~ div a, h1 ~ div button {
+    font-size: 11px !important;
+    padding: 8px 12px !important;
+    white-space: nowrap !important;
+    width: auto !important;
   }
 
-  /* 3. Choose Your Journey (Path 01 & Path 02): 2 kolom berdampingan ringkas */
+  /* 3. CHOOSE YOUR JOURNEY - PATH 01 & 02 (Screenshot 1): Kartu lebih pendek & proporsional */
   .grid-cols-2, [class*="md:grid-cols-2"] {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
+    gap: 8px !important;
+    align-items: stretch !important;
   }
   .grid-cols-2 > div, [class*="md:grid-cols-2"] > div {
-    padding: 12px !important;
+    padding: 10px !important;
+    min-height: auto !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
   }
   .grid-cols-2 h3, [class*="md:grid-cols-2"] h3 {
-    font-size: 0.95rem !important;
-    line-height: 1.25 !important;
+    font-size: 0.85rem !important;
+    line-height: 1.2 !important;
+    margin-top: 6px !important;
+    margin-bottom: 4px !important;
   }
   .grid-cols-2 p, [class*="md:grid-cols-2"] p {
-    font-size: 0.72rem !important;
-    line-height: 1.35 !important;
+    font-size: 0.65rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 8px !important;
+  }
+  /* Perkecil badge PATH 01/02, ikon, dan tombol Explore di dalam kartu */
+  .grid-cols-2 span, [class*="md:grid-cols-2"] span {
+    font-size: 8.5px !important;
+    padding: 3px 7px !important;
+  }
+  .grid-cols-2 a, .grid-cols-2 button,
+  [class*="md:grid-cols-2"] a, [class*="md:grid-cols-2"] button {
+    font-size: 9px !important;
+    padding: 5px 8px !important;
+    line-height: 1.15 !important;
   }
 
-  /* 4. Kartu Events, Volunteer, & Organization: 2 kolom nyaman dibaca */
+  /* 4. KARTU EVENTS, VOLUNTEER, & ORGANIZATION (Screenshot 2): Tinggi kartu ringkas & badge rapi */
   .grid-cols-3, [class*="md:grid-cols-3"], [class*="lg:grid-cols-3"] {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
+    gap: 8px !important;
+  }
+  .grid-cols-3 > div, [class*="md:grid-cols-3"] > div, [class*="lg:grid-cols-3"] > div {
+    min-height: 220px !important;
+    height: auto !important;
+  }
+  /* Perkecil badge kategori & tanggal di bagian atas kartu event agar tidak bertabrakan */
+  .grid-cols-3 span, [class*="md:grid-cols-3"] span, [class*="lg:grid-cols-3"] span {
+    font-size: 8px !important;
+    padding: 2px 6px !important;
+    line-height: 1.2 !important;
+  }
+  .grid-cols-3 h3, .grid-cols-3 h4,
+  [class*="md:grid-cols-3"] h3, [class*="lg:grid-cols-3"] h3 {
+    font-size: 0.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .grid-cols-3 p, [class*="md:grid-cols-3"] p, [class*="lg:grid-cols-3"] p {
+    font-size: 0.65rem !important;
+    line-height: 1.25 !important;
+  }
+  .grid-cols-3 a, .grid-cols-3 button,
+  [class*="md:grid-cols-3"] a, [class*="lg:grid-cols-3"] a {
+    font-size: 9px !important;
+    padding: 5px 8px !important;
   }
 
-  /* 5. Padding container */
+  /* 5. Batas kiri-kanan container */
   section, main, footer {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
