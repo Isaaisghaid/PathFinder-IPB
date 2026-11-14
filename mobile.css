@@ -109,62 +109,58 @@
     white-space: nowrap !important;
   }
 
-  /* 4. EVENTS, VOLUNTEER, & ORGANIZATION: Geser ke samping (Horizontal Scroll) */
+
+  /* 4. EVENTS, VOLUNTEER, & ORGANIZATION: Dijabarin satu-satu kotak ke bawah (1 kolom penuh) */
   #events-container, [id*="event"] .grid,
   .grid-cols-3, [class*="md:grid-cols-3"], [class*="lg:grid-cols-3"] {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 12px !important;
-    padding-bottom: 10px !important;
-    -webkit-overflow-scrolling: touch !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    overflow-x: visible !important;
   }
-  #events-container::-webkit-scrollbar,
-  [id*="event"] .grid::-webkit-scrollbar,
-  .grid-cols-3::-webkit-scrollbar,
-  [class*="md:grid-cols-3"]::-webkit-scrollbar,
-  [class*="lg:grid-cols-3"]::-webkit-scrollbar {
-    display: none !important;
-  }
+
+  /* Atur tiap kotak event agar lebar penuh (100%), tinggi proporsional, dan tidak terpotong */
   #events-container > div, [id*="event"] .grid > div,
   .grid-cols-3 > div, [class*="md:grid-cols-3"] > div, [class*="lg:grid-cols-3"] > div {
-    flex: 0 0 80% !important;
-    min-width: 260px !important;
-    max-width: 300px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     height: auto !important;
-    min-height: 240px !important;
-    scroll-snap-align: start !important;
+    min-height: 220px !important;
   }
+
+  /* Kembalikan ukuran badge kategori, tanggal, judul, & tombol agar terbaca jelas */
   #events-container span, [id*="event"] .grid span,
   .grid-cols-3 span, [class*="md:grid-cols-3"] span, [class*="lg:grid-cols-3"] span {
-    font-size: 9.5px !important;
+    font-size: 10px !important;
     padding: 3px 8px !important;
     white-space: nowrap !important;
   }
+
   #events-container h3, [id*="event"] .grid h3,
   .grid-cols-3 h3, [class*="md:grid-cols-3"] h3, [class*="lg:grid-cols-3"] h3 {
-    font-size: 0.95rem !important;
-    line-height: 1.25 !important;
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
   }
+
   #events-container p, [id*="event"] .grid p,
   .grid-cols-3 p, [class*="md:grid-cols-3"] p, [class*="lg:grid-cols-3"] p {
-    font-size: 0.72rem !important;
-    line-height: 1.35 !important;
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
   }
+
   #events-container a, #events-container button,
   [id*="event"] .grid a, [id*="event"] .grid button,
   .grid-cols-3 a, .grid-cols-3 button,
   [class*="md:grid-cols-3"] a, [class*="lg:grid-cols-3"] a {
-    font-size: 10px !important;
+    font-size: 11px !important;
     padding: 6px 12px !important;
     width: auto !important;
   }
-
+  
   /* 5. Batas kiri-kanan halaman */
   section, main, footer {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
 }
