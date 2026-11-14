@@ -100,38 +100,65 @@
     text-align: center !important;
   }
 
-  /* 4. EVENTS & ACADEMY CARDS: Rapikan menjadi 1 kolom penuh di HP agar gambar, badge tanggal, dan teks 100% utuh */
-  #events-container, #academy-container,
-  [id*="event"] .grid, [id*="academy"] .grid,
-  section .grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
+  /* 4. EVENTS, VOLUNTEER, & ORGANIZATION: Geser ke samping (Horizontal Scroll) seperti Academy */
+  #events-container, [id*="event"] .grid,
+  .grid-cols-3, [class*="md:grid-cols-3"], [class*="lg:grid-cols-3"] {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 12px !important;
+    padding-bottom: 10px !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
-  /* Atur tinggi kartu event & gambar latar belakang agar proporsional (tidak tinggi lonjong) */
-  #events-container > div, #academy-container > div,
-  [id*="event"] .grid > div, [id*="academy"] .grid > div,
-  section .grid > div {
+  /* Sembunyikan scrollbar bawaan agar tampilan tetap bersih */
+  #events-container::-webkit-scrollbar,
+  [id*="event"] .grid::-webkit-scrollbar,
+  .grid-cols-3::-webkit-scrollbar,
+  [class*="md:grid-cols-3"]::-webkit-scrollbar,
+  [class*="lg:grid-cols-3"]::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Atur ukuran tiap kartu event agar lebar & proporsional saat digeser */
+  #events-container > div, [id*="event"] .grid > div,
+  .grid-cols-3 > div, [class*="md:grid-cols-3"] > div, [class*="lg:grid-cols-3"] > div {
+    flex: 0 0 80% !important; /* Lebar kartu 80% layar HP sehingga kartu berikutnya mengintip di kanan */
+    min-width: 260px !important;
+    max-width: 300px !important;
     height: auto !important;
-    min-height: 210px !important;
-    max-height: none !important;
-    width: 100% !important;
+    min-height: 240px !important;
+    scroll-snap-align: start !important;
   }
 
-  /* Pastikan badge kategori & tanggal di atas kartu sejajar rapi kiri-kanan */
-  #events-container span, #academy-container span,
-  section .grid span {
-    font-size: 10px !important;
+  /* Pastikan badge kategori & tanggal di atas kartu kembali normal dan tidak terpotong */
+  #events-container span, [id*="event"] .grid span,
+  .grid-cols-3 span, [class*="md:grid-cols-3"] span, [class*="lg:grid-cols-3"] span {
+    font-size: 9.5px !important;
     padding: 3px 8px !important;
     white-space: nowrap !important;
   }
 
-  /* Pastikan teks "Target: Angkatan..." dan tombol "Event Detail" sejajar rapi di bawah */
+  /* Rapikan teks dan tombol di dalam kartu event */
+  #events-container h3, [id*="event"] .grid h3,
+  .grid-cols-3 h3, [class*="md:grid-cols-3"] h3, [class*="lg:grid-cols-3"] h3 {
+    font-size: 0.95rem !important;
+    line-height: 1.25 !important;
+  }
+
+  #events-container p, [id*="event"] .grid p,
+  .grid-cols-3 p, [class*="md:grid-cols-3"] p, [class*="lg:grid-cols-3"] p {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+  }
+
   #events-container a, #events-container button,
-  #academy-container a, #academy-container button,
-  section .grid a, section .grid button {
-    font-size: 11px !important;
+  [id*="event"] .grid a, [id*="event"] .grid button,
+  .grid-cols-3 a, .grid-cols-3 button,
+  [class*="md:grid-cols-3"] a, [class*="lg:grid-cols-3"] a {
+    font-size: 10px !important;
     padding: 6px 12px !important;
     width: auto !important;
   }
