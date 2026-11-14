@@ -1,57 +1,7 @@
 <!DOCTYPE html>
 <html lang="id" style="margin: 0; padding: 0; width: 100%; overflow-x: hidden;">
 <head>
-  <style>
-  html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-  @media (max-width: 768px) {
-    /* Tangkap kotak navbar atas (baik pakai <header> maupun <nav>) */
-    header, nav, header > div, nav > div {
-      flex-wrap: wrap !important;
-      justify-content: center !important;
-      gap: 8px !important;
-      height: auto !important;
-      max-width: 100% !important;
-    }
-
-    /* Baris 1: Teks slogan "Searching Future Find Dreams" dibuat memanjang rapi di atas */
-    header > div:first-child,
-    nav > div:first-child {
-      width: 100% !important;
-      text-align: center !important;
-      justify-content: center !important;
-      font-size: 11px !important;
-      padding-bottom: 4px;
-      border-bottom: 1px solid rgba(45, 91, 102, 0.15);
-    }
-
-    /* Perkecil ukuran link & tombol di navbar supaya muat semua di layar HP */
-    header a, header button, nav a, nav button {
-      font-size: 11px !important;
-      padding: 6px 10px !important;
-      white-space: nowrap !important;
-    }
-
-    /* Kartu Path 01 & Path 02 dibuat geser ke kanan (swipe horizontal) di HP */
-    .grid {
-      display: flex !important;
-      flex-direction: row !important;
-      overflow-x: auto !important;
-      scroll-snap-type: x mandatory;
-      gap: 14px !important;
-      padding-bottom: 12px !important;
-    }
-    .grid > div {
-      min-width: 82% !important;
-      scroll-snap-align: center;
-      flex-shrink: 0 !important;
-    }
-  }
-</style> 
-
+  <meta name="viewport" content="width=1280">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PathFinder IPB - Agregator & AI Minat Bakat</title>
