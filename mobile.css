@@ -1,0 +1,71 @@
+/* KHUSUS TAMPILAN MOBILE (LAYAR <= 768px) - TIDAK BERPENGARUH DI LAPTOP */
+@media (max-width: 768px) {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* 1. Navbar atas: slogan di baris 1, menu & 2 tombol kuning sejajar rapi di baris 2 */
+  header, nav {
+    padding: 10px 12px !important;
+    margin: 8px !important;
+  }
+  header > div, nav > div {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+  header > div > *:first-child,
+  nav > div > *:first-child {
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    margin-bottom: 4px !important;
+  }
+  header a, header button, nav a, nav button {
+    font-size: 10.5px !important;
+    padding: 5px 8px !important;
+    white-space: nowrap !important;
+  }
+
+  /* 2. Hero Section: ukuran judul enak dibaca */
+  h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+  h2 {
+    font-size: 1.35rem !important;
+    line-height: 1.25 !important;
+  }
+
+  /* 3. Choose Your Journey (Path 01 & Path 02): 2 kolom berdampingan ringkas */
+  .grid-cols-2, [class*="md:grid-cols-2"] {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .grid-cols-2 > div, [class*="md:grid-cols-2"] > div {
+    padding: 12px !important;
+  }
+  .grid-cols-2 h3, [class*="md:grid-cols-2"] h3 {
+    font-size: 0.95rem !important;
+    line-height: 1.25 !important;
+  }
+  .grid-cols-2 p, [class*="md:grid-cols-2"] p {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /* 4. Kartu Events, Volunteer, & Organization: 2 kolom nyaman dibaca */
+  .grid-cols-3, [class*="md:grid-cols-3"], [class*="lg:grid-cols-3"] {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  /* 5. Padding container */
+  section, main, footer {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
