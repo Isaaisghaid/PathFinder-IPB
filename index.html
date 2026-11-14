@@ -52,46 +52,67 @@
       animation: walkFootprints 6s linear infinite;
     }
 
-    <style>
-  /* Perbaikan Otomatis Tampilan Mobile (HP) */
+
   html, body {
     max-width: 100%;
     overflow-x: hidden;
   }
 
-  img, video, iframe {
-    max-width: 100%;
-    height: auto;
+  /* 1. Pastikan tombol Hero (Finder's partner & Search Your Path) selalu bisa diklik di lapisan paling atas */
+  button, a, [onclick] {
+    position: relative;
+    z-index: 20;
+    cursor: pointer;
   }
 
   @media (max-width: 768px) {
-    /* Perkecil padding container besar agar konten lega di HP */
+    /* 2. Rapikan Navbar agar pas di layar HP tanpa terpotong ke kanan */
+    nav {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 12px !important;
+      margin: 10px !important;
+    }
+    nav > div:first-child {
+      width: 100%;
+      text-align: center;
+      font-size: 11px !important;
+      white-space: nowrap;
+    }
+    nav a, nav button {
+      font-size: 11px !important;
+      padding: 6px 10px !important;
+    }
+
+    /* 3. Buat kartu Path 01 & Path 02 sejajar ke kanan (bisa digeser/swipe ke samping di HP) */
+    #journey .grid,
+    section:has([href*="path"]) .grid,
+    .journey-grid {
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory;
+      gap: 14px !important;
+      padding-bottom: 12px !important;
+    }
+    #journey .grid > div,
+    section:has([href*="path"]) .grid > div,
+    .journey-grid > div {
+      min-width: 82% !important;
+      scroll-snap-align: center;
+      flex-shrink: 0 !important;
+    }
+
+    /* 4. Rapikan padding & modal di layar HP */
     section, header, footer, main {
-      padding-left: 16px !important;
-      padding-right: 16px !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
     }
-
-    /* Paksa semua grid multi-kolom menjadi 1 kolom vertikal di HP */
-    .grid {
-      grid-template-columns: 1fr !important;
-    }
-
-    /* Rapikan ukuran judul besar agar tidak terpotong */
-    h1 {
-      font-size: 1.85rem !important;
-      line-height: 1.25 !important;
-    }
-    h2 {
-      font-size: 1.45rem !important;
-      line-height: 1.3 !important;
-    }
-
-    /* Pastikan popup chat & modal pas memenuhi layar HP dengan rapi */
-    #chatModal > div,
     [id*="Modal"] > div {
       width: 94% !important;
       max-width: 94% !important;
-      margin: 12px auto !important;
+      margin: 16px auto !important;
     }
   }
 </style>
