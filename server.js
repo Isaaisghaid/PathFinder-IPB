@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 const ai = new GoogleGenAI({
-  apiKey: "AQ.Ab8RN6KHXfwejXfFNr8PJ7VIrwURw97jqrIai92-8aXMrjqVZg"
+  apiKey: "AQ.Ab8RN6KB9-SoZo6T2B74eLdRZ0MANicqV1tIGyjSboxVEi80MA"
 });
 
 // Simpan memori percakapan agar Gemini ingat konteks obrolan sebelumnya
