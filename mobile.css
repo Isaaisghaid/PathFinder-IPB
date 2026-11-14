@@ -5,61 +5,55 @@
     overflow-x: hidden;
   }
 
-  /* 1. NAVBAR ATAS: Slogan penuh di atas, menu di bawahnya jadi 2x2 (2 kiri, 2 kanan) */
+  /* 1. NAVBAR ATAS (Kembali ke versi rapi 2 baris sejajar, tidak memanjang ke bawah) */
   header, nav {
-    padding: 12px 10px !important;
-    margin: 8px 10px !important;
+    padding: 10px 8px !important;
+    margin: 8px !important;
   }
-
-  /* Paksa pembungkus utama navbar turun ke bawah (column) */
-  header > div, nav > div,
-  header .flex, nav .flex {
+  header *, nav * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  header > div, nav > div {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 10px !important;
-    width: 100% !important;
+    gap: 8px !important;
   }
-
-  /* Slogan "Searching Future Find Dreams" rata tengah di baris atas */
   header > div > *:first-child,
   nav > div > *:first-child {
     width: 100% !important;
     text-align: center !important;
-    font-size: 11.5px !important;
+    font-size: 11px !important;
     margin: 0 !important;
   }
-
-  /* Pembungkus 4 menu (Beranda, Rekomendasi, Portal Finder, Portal Path) jadi 2x2 */
   header > div > *:last-child,
-  nav > div > *:last-child,
-  header ul, nav ul {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 6px 8px !important;
-    width: 100% !important;
+  nav > div > *:last-child {
+    display: flex !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
-    justify-items: center !important;
-  }
-
-  header a, header button, nav a, nav button {
-    font-size: 10.5px !important;
-    padding: 5px 10px !important;
+    justify-content: center !important;
+    gap: 6px !important;
     width: 100% !important;
-    text-align: center !important;
+  }
+  header a, header button, nav a, nav button {
+    font-size: 9.5px !important;
+    padding: 5px 7px !important;
+    width: auto !important;
     white-space: nowrap !important;
     margin: 0 !important;
+    line-height: 1.1 !important;
   }
 
-  /* 2. HERO SECTION: Judul & tombol utama rapi */
+  /* 2. HERO SECTION: Judul & tombol utama pas dan proporsional */
   h1 {
     font-size: 1.7rem !important;
     line-height: 1.2 !important;
     margin-bottom: 8px !important;
   }
 
-  /* 3. CHOOSE YOUR JOURNEY (PATH 01 & PATH 02): 2 kolom ringkas */
+  /* 3. CHOOSE YOUR JOURNEY (PATH 01 & PATH 02): Kembali 2 kolom berdampingan yang pas */
   .grid-cols-2, [class*="md:grid-cols-2"] {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -75,6 +69,18 @@
     justify-content: space-between !important;
     overflow: hidden !important;
   }
+  .grid-cols-2 > div > div:first-child,
+  [class*="md:grid-cols-2"] > div > div:first-child {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 4px !important;
+  }
+  .grid-cols-2 span, [class*="md:grid-cols-2"] span {
+    font-size: 8px !important;
+    padding: 3px 6px !important;
+    white-space: nowrap !important;
+  }
   .grid-cols-2 h3, [class*="md:grid-cols-2"] h3 {
     font-size: 0.82rem !important;
     line-height: 1.2 !important;
@@ -83,12 +89,13 @@
   .grid-cols-2 p, [class*="md:grid-cols-2"] p {
     font-size: 0.64rem !important;
     line-height: 1.3 !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 10px !important;
   }
   .grid-cols-2 > div > div:last-child,
   [class*="md:grid-cols-2"] > div > div:last-child {
     display: flex !important;
     flex-direction: column !important;
+    align-items: flex-start !important;
     gap: 6px !important;
     width: 100% !important;
   }
@@ -98,77 +105,64 @@
     padding: 5px 8px !important;
     width: 100% !important;
     text-align: center !important;
-  }
-
-  /* 4. EVENTS, VOLUNTEER, & ORGANIZATION: Kotak gambar dikecilkan & tidak ada yang kepotong */
-  .grid-cols-3, [class*="md:grid-cols-3"], [class*="lg:grid-cols-3"] {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-  }
-
-  /* Perkecil tinggi foto/gambar bagian atas kartu event (yang dilingkari ungu atas) */
-  .grid-cols-3 img, [class*="md:grid-cols-3"] img, [class*="lg:grid-cols-3"] img,
-  .grid-cols-3 > div > div:first-child,
-  [class*="md:grid-cols-3"] > div > div:first-child,
-  [class*="lg:grid-cols-3"] > div > div:first-child {
-    height: 105px !important;
-    max-height: 105px !important;
-    min-height: 105px !important;
-    object-fit: cover !important;
-  }
-
-  /* Perkecil badge kategori & tanggal di atas gambar agar tidak terpotong ke kanan */
-  .grid-cols-3 span, [class*="md:grid-cols-3"] span, [class*="lg:grid-cols-3"] span {
-    font-size: 7px !important;
-    padding: 2px 5px !important;
-    line-height: 1.1 !important;
+    justify-content: center !important;
     white-space: nowrap !important;
   }
 
-  /* Area teks & tombol bawah kartu event agar tidak kepotong seperti lingkaran ungu bawah */
-  .grid-cols-3 > div, [class*="md:grid-cols-3"] > div, [class*="lg:grid-cols-3"] > div {
-    padding: 0 !important;
-    min-height: auto !important;
-    height: auto !important;
-    overflow: hidden !important;
-  }
-  .grid-cols-3 > div > div:last-child,
-  [class*="md:grid-cols-3"] > div > div:last-child,
-  [class*="lg:grid-cols-3"] > div > div:last-child {
-    padding: 8px !important;
-  }
-  .grid-cols-3 h3, .grid-cols-3 h4,
-  [class*="md:grid-cols-3"] h3, [class*="lg:grid-cols-3"] h3 {
-    font-size: 0.78rem !important;
-    line-height: 1.2 !important;
-    margin: 3px 0 !important;
-  }
-  .grid-cols-3 p, [class*="md:grid-cols-3"] p, [class*="lg:grid-cols-3"] p {
-    font-size: 0.62rem !important;
-    line-height: 1.25 !important;
-    margin-bottom: 6px !important;
-  }
-
-  /* Susun teks "Target: Angkatan..." di atas tombol "Event Detail" agar tidak saling potong */
-  .grid-cols-3 > div > div:last-child > div:last-child,
-  [class*="md:grid-cols-3"] > div > div:last-child > div:last-child,
-  [class*="lg:grid-cols-3"] > div > div:last-child > div:last-child {
+  /* 4. EVENTS, VOLUNTEER, & ORGANIZATION: Geser ke samping (Horizontal Scroll) */
+  #events-container, [id*="event"] .grid,
+  .grid-cols-3, [class*="md:grid-cols-3"], [class*="lg:grid-cols-3"] {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 5px !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 12px !important;
+    padding-bottom: 10px !important;
+    -webkit-overflow-scrolling: touch !important;
   }
+  #events-container::-webkit-scrollbar,
+  [id*="event"] .grid::-webkit-scrollbar,
+  .grid-cols-3::-webkit-scrollbar,
+  [class*="md:grid-cols-3"]::-webkit-scrollbar,
+  [class*="lg:grid-cols-3"]::-webkit-scrollbar {
+    display: none !important;
+  }
+  #events-container > div, [id*="event"] .grid > div,
+  .grid-cols-3 > div, [class*="md:grid-cols-3"] > div, [class*="lg:grid-cols-3"] > div {
+    flex: 0 0 80% !important;
+    min-width: 260px !important;
+    max-width: 300px !important;
+    height: auto !important;
+    min-height: 240px !important;
+    scroll-snap-align: start !important;
+  }
+  #events-container span, [id*="event"] .grid span,
+  .grid-cols-3 span, [class*="md:grid-cols-3"] span, [class*="lg:grid-cols-3"] span {
+    font-size: 9.5px !important;
+    padding: 3px 8px !important;
+    white-space: nowrap !important;
+  }
+  #events-container h3, [id*="event"] .grid h3,
+  .grid-cols-3 h3, [class*="md:grid-cols-3"] h3, [class*="lg:grid-cols-3"] h3 {
+    font-size: 0.95rem !important;
+    line-height: 1.25 !important;
+  }
+  #events-container p, [id*="event"] .grid p,
+  .grid-cols-3 p, [class*="md:grid-cols-3"] p, [class*="lg:grid-cols-3"] p {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+  }
+  #events-container a, #events-container button,
+  [id*="event"] .grid a, [id*="event"] .grid button,
   .grid-cols-3 a, .grid-cols-3 button,
   [class*="md:grid-cols-3"] a, [class*="lg:grid-cols-3"] a {
-    font-size: 8.5px !important;
-    padding: 5px 8px !important;
-    width: 100% !important;
-    text-align: center !important;
-    white-space: nowrap !important;
+    font-size: 10px !important;
+    padding: 6px 12px !important;
+    width: auto !important;
   }
 
-  /* 5. Batas kiri-kanan container */
+  /* 5. Batas kiri-kanan halaman */
   section, main, footer {
     padding-left: 10px !important;
     padding-right: 10px !important;
