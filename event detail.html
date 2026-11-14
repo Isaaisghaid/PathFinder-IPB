@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Kegiatan - PathFinder IPB</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-image: radial-gradient(#9ac1c9 0.85px, transparent 0.85px);
+      background-size: 24px 24px;
+      background-color: #FAF8F5;
+    }
+    .font-heading {
+      font-family: 'Cinzel', Georgia, serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-[#2D4059] p-4 md:p-8 relative overflow-x-hidden">
+
+  <!-- SPARKLE BACKGROUND DEKORASI -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <svg class="absolute top-16 left-10 w-6 h-6 text-[#3B7A87] opacity-40" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+    <svg class="absolute top-32 right-14 w-5 h-5 text-[#D9A05B] opacity-50" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+  </div>
+
+  <!-- NAVBAR MELAYANG (SERAGAM DENGAN BERANDA) -->
+  <header class="max-w-4xl mx-auto mb-8 relative z-10">
+    <nav class="bg-[#CAEAFF]/90 backdrop-blur-md px-6 py-3.5 rounded-2xl shadow-md border-2 border-[#32566D] flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-heading font-bold text-[#2D5B66] text-base md:text-lg">
+          ✦ PATHFINDER IPB ✦
+        </span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="Portal finder.html" class="bg-[#FFEDAC] border-2 border-[#32566D] hover:bg-[#f5dc82] text-[#32566D] px-4 py-1.5 rounded-xl text-xs font-bold shadow-sm transition">
+          Portal Finder
+        </a>
+        <a href="index.html" onclick="if(window.opener){window.close(); return false;}" 
+           class="bg-white border-2 border-[#32566D] hover:bg-gray-50 text-[#2D5B66] px-4 py-1.5 rounded-xl text-xs font-bold shadow-sm transition">
+          ← Kembali
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- KONTAINER UTAMA DETAIL KEGIATAN -->
+  <main class="max-w-4xl mx-auto relative z-10">
+    <article id="detailCardContent" class="bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border-2 border-[#32566D] overflow-hidden">
+      <!-- Konten diisi dinamis oleh JavaScript -->
+    </article>
+  </main>
+
+  <footer class="w-full text-center py-8 text-xs text-gray-500 relative z-10">
+    &copy; 2026 PathFinder IPB Project. All rights reserved.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get('type') || 'oprek';
+      const id = parseInt(params.get('id') || '0', 10);
+
+      const storageKey = type === 'academy' ? 'pathfinder_academy_data' : 'pathfinder_oprek_data';
+      const list = JSON.parse(localStorage.getItem(storageKey)) || [];
+      const item = list[id];
+
+      const container = document.getElementById('detailCardContent');
+
+      if (!item) {
+        container.innerHTML = `
+          <div class="text-center py-16 px-6">
+            <div class="w-16 h-16 bg-teal-50 text-[#2D7A89] rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 border border-teal-200">🧭</div>
+            <h2 class="text-xl font-bold text-[#2D5B66] font-serif mb-2">Kegiatan Tidak Ditemukan</h2>
+            <p class="text-gray-500 text-xs mb-6">Data kegiatan belum tersedia atau sudah dihapus dari sistem.</p>
+            <a href="index.html" class="inline-block bg-[#8ABBDA] border-2 border-[#32566D] text-[#2D5B66] px-6 py-2.5 rounded-xl text-xs font-bold shadow">
+              Kembali ke Beranda
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      document.title = `${item.judul} - PathFinder IPB`;
+
+      const fallbackImg = type === 'academy'
+        ? "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80"
+        : "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80";
+
+      const rawTags = item.tags || `${item.kategori || 'Kegiatan'}, Mahasiswa IPB, Pengembangan Diri`;
+      const tagsArray = Array.isArray(rawTags)
+        ? rawTags
+        : String(rawTags).split(',').map(t => t.trim()).filter(Boolean);
+
+      const tagsHtml = tagsArray.map(tag => `
+        <span class="bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#3B7A87]/30 text-xs font-semibold px-3.5 py-1.5 rounded-full">
+          # ${escapeHtml(tag)}
+        </span>
+      `).join('');
+
+      const guidebookBtnHtml = item.guidebookUrl
+        ? `<a href="${escapeHtml(item.guidebookUrl)}" target="_blank" rel="noopener noreferrer" 
+              class="flex-1 min-w-[180px] bg-white hover:bg-[#FAF8F5] text-[#2D5B66] border-2 border-[#32566D] py-3 px-4 rounded-xl font-bold text-xs text-center shadow-sm transition flex items-center justify-center gap-2">
+             <i class="fa-solid fa-book-open text-[#D9A05B]"></i> Buka Guidebook (PDF)
+           </a>`
+        : `<span class="flex-1 min-w-[180px] bg-gray-100 text-gray-400 border-2 border-gray-200 py-3 px-4 rounded-xl font-bold text-xs text-center cursor-not-allowed">
+             Guidebook Belum Tersedia
+           </span>`;
+
+      container.innerHTML = `
+        <!-- BANNER POSTER KEGIATAN -->
+        <div class="relative w-full h-64 md:h-80 bg-slate-900 overflow-hidden border-b-2 border-[#32566D]">
+          <img src="${escapeHtml(item.imageUrl || fallbackImg)}" alt="${escapeHtml(item.judul)}" 
+               class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
+          
+          <div class="absolute top-5 left-5 right-5 flex flex-wrap justify-between items-center gap-2">
+            <span class="bg-[#EFE7D3] text-[#2D5B66] border border-[#D9A05B] text-xs font-extrabold uppercase tracking-wider px-4 py-1.5 rounded-full shadow">
+              ${escapeHtml(item.kategori || 'Kegiatan IPB')}
+            </span>
+            <span class="bg-[#2D5B66]/90 backdrop-blur-md text-[#FFEDAC] text-xs font-bold px-4 py-1.5 rounded-full border border-white/20 shadow">
+              <i class="fa-regular fa-clock mr-1"></i> Batas: ${escapeHtml(item.batasWaktu || '-')}
+            </span>
+          </div>
+        </div>
+
+        <!-- BODY KONTEN DETAIL -->
+        <div class="p-6 md:p-10">
+          <div class="mb-6">
+            <p class="text-xs font-bold text-[#3B7A87] uppercase tracking-wider mb-1.5">
+              <i class="fa-solid fa-building-columns mr-1"></i> Penyelenggara: ${escapeHtml(item.penyelenggara || 'Organisasi / Kepanitiaan IPB')}
+            </p>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-[#2D5B66] font-serif leading-snug">
+              ${escapeHtml(item.judul)}
+            </h1>
+          </div>
+
+          <!-- 3 KOTAK INFORMASI UTAMA -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div class="bg-[#FAF8F5] p-4 rounded-2xl border border-[#3B7A87]/25">
+              <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mb-1">Batas Pendaftaran</span>
+              <strong class="text-sm text-[#2D5B66]">${escapeHtml(item.batasWaktu || '-')}</strong>
+            </div>
+            <div class="bg-[#FAF8F5] p-4 rounded-2xl border border-[#3B7A87]/25">
+              <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mb-1">Biaya / Lingkup</span>
+              <strong class="text-sm text-emerald-700">${escapeHtml(item.lingkupPendaftaran || 'Gratis (Mahasiswa IPB)')}</strong>
+            </div>
+            <div class="bg-[#FAF8F5] p-4 rounded-2xl border border-[#3B7A87]/25">
+              <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mb-1">Target / Sasaran</span>
+              <strong class="text-sm text-[#2D5B66]">${escapeHtml(item.targetAngkatan || 'Mahasiswa IPB')}</strong>
+            </div>
+          </div>
+
+          <!-- DESKRIPSI KEGIATAN -->
+          <section class="mb-8">
+            <h2 class="text-sm font-extrabold text-[#2D5B66] uppercase tracking-wider mb-2.5 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#3B7A87]"></span> Deskripsi & Persyaratan Kegiatan
+            </h2>
+            <div class="bg-[#FAF8F5]/80 p-5 rounded-2xl border border-gray-200/80 text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+              ${escapeHtml(item.deskripsi || '')}
+            </div>
+          </section>
+
+          <!-- TAGS & SKILL -->
+          <section class="mb-8">
+            <h2 class="text-sm font-extrabold text-[#2D5B66] uppercase tracking-wider mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#D9A05B]"></span> Block Tags & Kompetensi Terkait
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              ${tagsHtml}
+            </div>
+          </section>
+
+          <!-- TOMBOL AKSI (GUIDEBOOK, SIMPAN KE TRACK RECORD, & DAFTAR) -->
+          <div class="pt-6 border-t border-gray-200 flex flex-wrap gap-3">
+            ${guidebookBtnHtml}
+
+            <button type="button" onclick="simpanKePortalFinder('${type}', ${id}, 'Tertarik / Wishlist')" 
+                    class="flex-1 min-w-[180px] bg-[#FFEDAC] hover:bg-[#f5dc82] text-[#2D5B66] border-2 border-[#32566D] py-3 px-4 rounded-xl font-bold text-xs shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-bookmark"></i> Simpan ke Track Record
+            </button>
+
+            <a href="${escapeHtml(item.linkPendaftaran || '#')}" target="_blank" rel="noopener noreferrer"
+               onclick="simpanKePortalFinder('${type}', ${id}, 'Berkas Terkirim')" 
+               class="flex-1 min-w-[200px] bg-[#3B7A87] hover:bg-[#2D5B66] text-white border-2 border-[#32566D] py-3 px-4 rounded-xl font-extrabold text-xs text-center shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-rocket"></i> Daftar Event Sekarang
+            </a>
+          </div>
+        </div>
+      `;
+    });
+
+    function simpanKePortalFinder(type, index, statusAwal = 'Tertarik / Wishlist') {
+      const storageKey = type === 'academy' ? 'pathfinder_academy_data' : 'pathfinder_oprek_data';
+      const list = JSON.parse(localStorage.getItem(storageKey)) || [];
+      const item = list[index];
+      if (!item) return;
+
+      const savedList = JSON.parse(localStorage.getItem('pathfinder_saved_orgs')) || [];
+      const existingIndex = savedList.findIndex(org => org.judul === item.judul);
+
+      const tanggalSekarang = new Date().toLocaleDateString('id-ID', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      });
+
+      if (existingIndex === -1) {
+        savedList.unshift({
+          kategori: item.kategori || 'Kegiatan IPB',
+          judul: item.judul,
+          status: statusAwal,
+          tanggalDaftar: tanggalSekarang,
+          type: type,
+          eventIndex: index
+        });
+      } else {
+        savedList[existingIndex].status = statusAwal;
+      }
+
+      localStorage.setItem('pathfinder_saved_orgs', JSON.stringify(savedList));
+      alert(`✅ "${item.judul}" berhasil tercatat di Track Record Portal Finder (${statusAwal})!`);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[m]));
+    }
+  </script>
+
+</body>
+</html>

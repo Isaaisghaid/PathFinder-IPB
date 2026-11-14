@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="id" style="margin: 0; padding: 0; width: 100%; overflow-x: hidden;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PathFinder IPB - Agregator & AI Minat Bakat</title>
+  
+  <!-- Tailwind CSS & Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- File Style Terpisah -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="event card.css">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+      border: none !important;
+    }
+
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .bg-pattern {
+      background-image: radial-gradient(#9ac1c9 0.85px, transparent 0.85px);
+      background-size: 24px 24px;
+      background-color: #FAF8F5;
+    }
+
+    @keyframes walkFootprints {
+      0% { stroke-dashoffset: 1000; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    .animate-footprints {
+      stroke-dasharray: 14 22;
+      stroke-dashoffset: 1000;
+      animation: walkFootprints 6s linear infinite;
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0;" class="w-full relative flex flex-col justify-between bg-pattern text-[#2D4059] font-sans antialiased">
+
+  <!-- SPARKLE BACKGROUND DEKORASI -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <svg class="absolute top-14 left-10 w-6 h-6 text-[#3B7A87] opacity-40" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+    <svg class="absolute top-24 right-16 w-5 h-5 text-[#3B7A87] opacity-50" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+    <svg class="absolute top-1/3 left-16 w-4 h-4 text-[#D9A05B] opacity-40" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+    <svg class="absolute top-1/2 right-12 w-7 h-7 text-[#3B7A87] opacity-40" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+  </div>
+
+  <!-- NAVBAR MELAYANG -->
+  <header class="w-full flex justify-center pt-5 px-4 md:px-10 z-20">
+    <nav class="bg-[#CAEAFF]/90 backdrop-blur-md px-6 md:px-8 py-3 rounded-xl shadow-md border-2 border-slate-800 flex items-center justify-between w-full">
+      <div class="flex items-center gap-2">
+        <span class="text-base md:text-lg font-bold text-[#2D5B66]">✦ Searching Future Find Dreams ✦</span>
+      </div>
+
+      <div class="flex items-center gap-3 md:gap-6 text-sm font-semibold text-[#4A5568]">
+        <button type="button" onclick="switchTab('home')" class="hover:text-[#2D5B66] transition cursor-pointer">Beranda</button>
+        <button type="button" onclick="switchTab('rekomendasi')" class="hover:text-[#2D5B66] transition cursor-pointer">Rekomendasi</button>
+        <a href="Portal finder.html" class="bg-[#FFEDAC] border-2 border-[#32566D] hover:bg-[#f5dc82] text-[#32566D] px-4 md:px-5 py-2 rounded-xl text-xs md:text-sm font-bold shadow-sm transition inline-block">
+          Portal Finder
+        </a> 
+        <a href="portal path.html" class="bg-[#FFEDAC] border-2 border-[#32566D] hover:bg-[#f5dc82] text-[#32566D] px-4 md:px-5 py-2 rounded-xl text-xs md:text-sm font-bold shadow-sm transition inline-block">
+          Portal Path
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN KONTAINER -->
+  <main class="w-full relative z-10">
+
+    <!-- ========================================== -->
+    <!-- SEKSI 1: BERANDA                           -->
+    <!-- ========================================== -->
+    <div id="tab-home" class="w-full">
+      
+      <!-- HERO SECTION -->
+      <section class="w-full text-center pt-12 pb-6 px-6 relative overflow-hidden">
+        <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[280px] bg-teal-200/30 blur-[110px] rounded-full pointer-events-none -z-10"></div>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold text-[#2D5B66] mb-3 font-serif tracking-tight">PATHFINDER IPB</h1>
+        <p class="text-lg md:text-xl font-bold text-[#3B7A87] mb-3">Temukan Minat & Peluang Karirmu</p>
+        <p class="text-gray-600 max-w-2xl mx-auto text-xs md:text-sm mb-8 leading-relaxed">
+          Platform khusus mahasiswa IPB mengakses seluruh kegiatan pengembangan diri yang akan segera berlangsung. Isi kuis untuk menemukan organisasi, kepanitiaan, kompetisi, volunteer, workshop hingga beasiswa yang cocok dengan kamu!
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+          <button type="button" onclick="openChatModal()" class="bg-[#CAEAFF] border-2 border-[#32566D] hover:bg-[#8ABBDA] text-[#2D5B66] px-6 py-2.5 rounded-xl text-sm font-bold shadow-md transition flex items-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-comments"></i> Finder's partner
+          </button>
+          <button type="button" onclick="switchTab('kuis')" class="bg-[#8ABBDA] border-2 border-[#32566D] hover:bg-[#CAEAFF] text-[#2D5B66] px-8 py-2.5 rounded-xl text-sm font-bold shadow-md transition cursor-pointer">
+            Search Your Path →
+          </button>
+        </div>
+
+        <!-- ANIMASI JEJAK KAKI BERGELOMBANG -->
+        <div class="w-full overflow-hidden py-2 relative z-10 opacity-80">
+          <svg class="w-full h-12 text-[#2D7A89]" viewBox="0 0 1200 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M1200 50 C 900 15, 700 85, 400 25 C 200 5, 100 75, 0 50" 
+                  stroke="currentColor" 
+                  stroke-width="7" 
+                  stroke-linecap="round" 
+                  class="animate-footprints" />
+          </svg>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+<!-- CHOOSE YOUR JOURNEY (EYE-CATCHING & SERAGAM DENGAN TEMA)       -->
+<!-- ============================================================== -->
+<section id="chooseJourney" class="w-full py-14 px-6 md:px-16 relative">
+  <div class="text-center mb-12">
+    <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-widest text-[#2D5B66] bg-[#FFEDAC] px-4 py-1.5 rounded-full border-2 border-[#32566D] shadow-sm">
+      ✦ EXPLORATION PATH ✦
+    </span>
+    <h2 class="text-3xl md:text-5xl font-extrabold text-[#2D5B66] font-serif tracking-wide mt-4">
+      Choose Your Journey
+    </h2>
+    <p class="text-xs md:text-sm text-gray-600 max-w-xl mx-auto mt-2.5 leading-relaxed">
+      Pilih jalur pengembangan diri dan ekspresi potensimu selama menjadi mahasiswa IPB University
+    </p>
+  </div>
+
+  <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto">
+    
+    <!-- PATH 01 CARD (KREM-BIRU MUDA DENGAN BORDER TEGAS) -->
+    <div class="relative group rounded-3xl overflow-hidden bg-gradient-to-br from-[#CAEAFF]/85 via-[#E6F4FA] to-[#FAF8F5] border-2 border-[#32566D] p-8 md:p-10 flex flex-col justify-between min-h-[300px] shadow-[6px_6px_0px_#32566D] hover:-translate-y-1.5 hover:shadow-[10px_10px_0px_#32566D] transition duration-300">
+      
+      <!-- Dekorasi Sparkle Sudut -->
+      <svg class="absolute top-6 right-6 w-8 h-8 text-[#3B7A87] opacity-30 group-hover:rotate-45 transition duration-500" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+      </svg>
+
+      <div class="relative z-10">
+        <div class="flex items-center justify-between gap-2 mb-5">
+          <span class="bg-[#FFEDAC] text-[#2D5B66] text-[11px] font-extrabold px-3.5 py-1 rounded-full border border-[#32566D] uppercase tracking-wider">
+            ✦ Path 01
+          </span>
+          <div class="w-11 h-11 rounded-2xl bg-white border-2 border-[#32566D] flex items-center justify-center text-lg text-[#2D5B66] shadow-sm">
+            <i class="fa-solid fa-people-group"></i>
+          </div>
+        </div>
+
+        <h3 class="text-2xl md:text-3xl font-extrabold text-[#2D5B66] font-serif leading-snug mb-3">
+          Events, Volunteer, &amp; Organization
+        </h3>
+        <p class="text-xs md:text-sm text-gray-700 mb-7 leading-relaxed font-medium">
+          Bangun jejaring kepemimpinan bersama kepanitiaan kampus, UKM, organisasi mahasiswa, dan gerakan sosial IPB.
+        </p>
+      </div>
+
+      <div class="relative z-10 flex items-center justify-between pt-4 border-t border-[#32566D]/15">
+        <span class="text-[11px] font-bold text-[#3B7A87]">Kepanitiaan • UKM • Sosial</span>
+        <a href="#oprekSection" class="inline-flex items-center gap-2 bg-[#FFEDAC] hover:bg-[#f5dc82] text-[#2D5B66] border-2 border-[#32566D] font-extrabold text-xs px-6 py-2.5 rounded-xl shadow-sm transition transform group-hover:translate-x-1">
+          Explore Events &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- PATH 02 CARD (TEAL-BIRU GELAP ELEGAN DENGAN BORDER TEGAS) -->
+    <div class="relative group rounded-3xl overflow-hidden bg-gradient-to-br from-[#234E58] via-[#2D5B66] to-[#3B7A87] border-2 border-[#32566D] p-8 md:p-10 flex flex-col justify-between min-h-[300px] text-white shadow-[6px_6px_0px_#32566D] hover:-translate-y-1.5 hover:shadow-[10px_10px_0px_#32566D] transition duration-300">
+      
+      <!-- Dekorasi Sparkle Sudut -->
+      <svg class="absolute top-6 right-6 w-8 h-8 text-[#FFEDAC] opacity-35 group-hover:rotate-45 transition duration-500" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+      </svg>
+
+      <div class="relative z-10">
+        <div class="flex items-center justify-between gap-2 mb-5">
+          <span class="bg-[#CAEAFF] text-[#1E4D56] text-[11px] font-extrabold px-3.5 py-1 rounded-full border border-[#32566D] uppercase tracking-wider">
+            ✦ Path 02
+          </span>
+          <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md border border-white/30 flex items-center justify-center text-lg text-[#FFEDAC] shadow-sm">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+        </div>
+
+        <h3 class="text-2xl md:text-3xl font-extrabold text-[#FFEDAC] font-serif leading-snug mb-3">
+          Academy, Scholarship, &amp; Competition
+        </h3>
+        <p class="text-xs md:text-sm text-teal-50/90 mb-7 leading-relaxed font-medium">
+          Asah kapasitas akademik, raih dukungan beasiswa unggulan, dan wakili IPB di berbagai kompetisi bergengsi.
+        </p>
+      </div>
+
+      <div class="relative z-10 flex items-center justify-between pt-4 border-t border-white/15">
+        <span class="text-[11px] font-bold text-[#CAEAFF]">Beasiswa • Lomba • Bootcamp</span>
+        <a href="#academySection" class="inline-flex items-center gap-2 bg-[#CAEAFF] hover:bg-white text-[#1E4D56] border-2 border-[#32566D] font-extrabold text-xs px-6 py-2.5 rounded-xl shadow-sm transition transform group-hover:translate-x-1">
+          Explore Opportunity &rarr;
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- PATH 01 OUTPUT: EVENTS, VOLUNTEER, & ORGANIZATION (EYE-CATCHING) -->
+<!-- ============================================================== -->
+<section id="oprekSection" class="w-full py-14 px-4 md:px-12 my-6 relative">
+  <div class="max-w-7xl mx-auto bg-white/90 backdrop-blur-md rounded-[2rem] border-2 border-[#32566D] p-6 md:p-10 shadow-xl relative overflow-hidden">
+    
+    <!-- Dekorasi Sudut -->
+    <svg class="absolute -top-3 -right-3 w-12 h-12 text-[#D9A05B] opacity-25 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+
+    <!-- Header Section -->
+    <div class="flex flex-wrap justify-between items-end gap-4 mb-6 pb-5 border-b-2 border-dashed border-[#3B7A87]/30">
+      <div>
+        <span class="inline-flex items-center gap-1.5 bg-[#EFE7D3] text-[#2D5B66] border border-[#D9A05B] text-[10px] font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full mb-2.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Open Recruitment &amp; Active Events
+        </span>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-wide text-[#2D5B66] font-serif">
+          Events, Volunteer, &amp; Organization
+        </h2>
+        <p class="text-xs md:text-sm text-gray-600 mt-1">
+          Temukan kepanitiaan, UKM, organisasi mahasiswa, &amp; aksi sosial IPB yang sedang membuka pendaftaran
+        </p>
+      </div>
+
+      <a href="portal path.html" class="bg-[#FFEDAC] hover:bg-[#f5dc82] text-[#2D5B66] border-2 border-[#32566D] text-xs font-extrabold px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-1.5">
+        <i class="fa-solid fa-plus"></i> Publish Event
+      </a>
+    </div>
+
+    <!-- Filter Kategori Interaktif -->
+    <div id="oprekFilterBar" class="flex flex-wrap items-center gap-2 mb-8">
+      <button type="button" onclick="filterOprekCards('ALL', this)" class="oprek-filter-btn bg-[#2D5B66] text-white border-2 border-[#32566D] text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        Semua Kegiatan
+      </button>
+      <button type="button" onclick="filterOprekCards('Kepanitiaan', this)" class="oprek-filter-btn bg-[#FAF8F5] hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        Kepanitiaan
+      </button>
+      <button type="button" onclick="filterOprekCards('Organisasi Kampus', this)" class="oprek-filter-btn bg-[#FAF8F5] hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        Organisasi Kampus
+      </button>
+      <button type="button" onclick="filterOprekCards('UKM Seni / Olahraga', this)" class="oprek-filter-btn bg-[#FAF8F5] hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        UKM Seni / Olahraga
+      </button>
+      <button type="button" onclick="filterOprekCards('Volunteer', this)" class="oprek-filter-btn bg-[#FAF8F5] hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        Volunteer
+      </button>
+    </div>
+
+    <!-- CONTAINER KARTU BERFOTO -->
+    <div id="oprekContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+
+  </div>
+</section>
+    
+      <!-- ============================================================== -->
+      <!-- PATH 02 OUTPUT: ACADEMY, SCHOLARSHIP, & COMPETITION (LATAR BIRU) -->
+      <!-- ============================================================== -->
+      <section id="academySection" class="w-full py-16 bg-[#3B7A87] text-white overflow-hidden relative">
+        <div class="text-center mb-10 px-4">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-teal-200 bg-white/10 px-3.5 py-1 rounded-full border border-white/20">
+            ✦ ACADEMIC & ACHIEVEMENT PATH ✦
+          </span>
+          <h2 class="text-3xl md:text-5xl font-extrabold font-serif tracking-tight mt-3">
+            Academy, Scholarship, <span class="font-sans font-bold text-teal-200">&amp; Competition</span>
+          </h2>
+          <p class="text-xs md:text-sm text-teal-100/85 mt-2">
+            Eksplorasi peluang beasiswa, kompetisi tingkat kampus hingga nasional, dan program pengembangan akademik IPB
+          </p>
+        </div>
+
+        <!-- Wrapper Carousel -->
+        <div class="relative w-full">
+          <button type="button" onclick="scrollAcademy(-1)" aria-label="Geser Kiri"
+            class="hidden md:flex items-center justify-center w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1E4D56] shadow-xl absolute left-6 top-1/2 -translate-y-1/2 z-20 transition transform hover:scale-110 cursor-pointer">
+            &#10094;
+          </button>
+
+          <!-- Horizontal Scroll Container Dinamis -->
+          <div id="academyTrack" class="flex gap-6 overflow-x-auto snap-x snap-mandatory px-[8vw] md:px-[18vw] pb-6 pt-2 scrollbar-none items-center cursor-grab active:cursor-grabbing select-none scroll-smooth">
+            <!-- Dirender otomatis oleh JavaScript -->
+          </div>
+
+          <button type="button" onclick="scrollAcademy(1)" aria-label="Geser Kanan"
+            class="hidden md:flex items-center justify-center w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1E4D56] shadow-xl absolute right-6 top-1/2 -translate-y-1/2 z-20 transition transform hover:scale-110 cursor-pointer">
+            &#10095;
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SEKSI 2: KUIS MINAT BAKAT                  -->
+    <!-- ========================================== -->
+    <section id="tab-kuis" class="hidden max-w-4xl mx-auto my-10 bg-white p-6 md:p-8 rounded-2xl shadow-md border border-[#CAEAFF]/40">
+      <h2 class="text-2xl font-bold text-[#2D5B66] mb-2 text-center font-serif">Kuis Minat & Bakat IPB</h2>
+      <p class="text-sm text-gray-500 text-center mb-6">Pilih jawaban dari 1 (Sangat Tidak Setuju) hingga 5 (Sangat Setuju)</p>
+      
+      <form id="quizForm" class="space-y-6">
+        <div id="quizQuestions" class="space-y-4"></div>
+        <button type="button" onclick="submitQuiz()" class="w-full bg-[#3B7A87] hover:bg-[#2D5B66] text-white py-3 rounded-xl font-bold shadow-md transition text-lg cursor-pointer">
+          Lihat Hasil & Rekomendasi →
+        </button>
+      </form>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SEKSI 3: REKOMENDASI                       -->
+    <!-- ========================================== -->
+    <!-- ============================================================== -->
+<!-- SEKSI 3: REKOMENDASI (EDITORIAL KAMPUS & TERINTEGRASI DATA)    -->
+<!-- ============================================================== -->
+<section id="tab-rekomendasi" class="hidden max-w-6xl mx-auto my-10 px-4 md:px-6 relative z-10">
+  
+  <!-- KARTU RINGKASAN PROFIL BAKAT -->
+  <div class="bg-[#EFE7D3] p-6 md:p-8 rounded-3xl mb-10 border-2 border-[#32566D] shadow-[6px_6px_0px_#32566D] relative overflow-hidden">
+    <svg class="absolute -bottom-3 -right-3 w-14 h-14 text-[#D9A05B] opacity-30 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+
+    <div class="flex flex-wrap justify-between items-start gap-4 mb-4 pb-4 border-b border-[#32566D]/20">
+      <div>
+        <span class="bg-[#FFEDAC] text-[#2D5B66] border border-[#32566D] text-[10px] font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full">
+          ✦ Hasil Pemetaan Potensi
+        </span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[#2D5B66] font-serif mt-2">
+          Peta Minat &amp; Arah Gerakmu
+        </h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="switchTab('kuis')" class="bg-white hover:bg-[#FAF8F5] text-[#2D5B66] border-2 border-[#32566D] text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition cursor-pointer">
+          Ulangi Kuis
+        </button>
+        <a href="Portal finder.html" class="bg-[#CAEAFF] hover:bg-[#8ABBDA] text-[#2D5B66] border-2 border-[#32566D] text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition">
+          Simpan ke Portal Finder &rarr;
+        </a>
+      </div>
+    </div>
+
+    <div id="profileSummary" class="bg-white/85 p-5 rounded-2xl border border-[#32566D]/25 text-xs md:text-sm text-[#2D4059] leading-relaxed">
+      Isi kuis minat bakat terlebih dahulu agar sistem dapat memetakan kecenderungan peranmu di kepanitiaan, organisasi, lomba, maupun beasiswa IPB.
+    </div>
+  </div>
+
+  <!-- HEADER DAFTAR REKOMENDASI -->
+  <div class="flex flex-wrap justify-between items-end gap-4 mb-6">
+    <div>
+      <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#3B7A87]">
+        Kurasi Peluang Terdekat
+      </span>
+      <h3 class="text-2xl md:text-3xl font-extrabold text-[#2D5B66] font-serif mt-1">
+        Rekomendasi Langkah Berikutnya
+      </h3>
+    </div>
+
+    <!-- Filter Jalur Rekomendasi -->
+    <div class="flex flex-wrap gap-2">
+      <button type="button" onclick="filterRekomendasi('ALL', this)" class="rekom-filter-btn bg-[#2D5B66] text-white border-2 border-[#32566D] text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        Semua Jalur
+      </button>
+      <button type="button" onclick="filterRekomendasi('oprek', this)" class="rekom-filter-btn bg-white hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        Organisasi &amp; Kepanitiaan
+      </button>
+      <button type="button" onclick="filterRekomendasi('academy', this)" class="rekom-filter-btn bg-white hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer">
+        Beasiswa &amp; Kompetisi
+      </button>
+    </div>
+  </div>
+
+  <!-- TABEL / DAFTAR REKOMENDASI BERGAYA EDITORIAL -->
+  <div class="bg-white/95 backdrop-blur-md rounded-3xl border-2 border-[#32566D] shadow-xl overflow-hidden">
+    <!-- Header Kolom (Desktop) -->
+    <div class="hidden md:grid md:grid-cols-12 gap-4 bg-[#CAEAFF]/75 px-6 py-3.5 border-b-2 border-[#32566D] text-[11px] font-extrabold uppercase tracking-wider text-[#2D5B66]">
+      <div class="col-span-5">Kegiatan &amp; Penyelenggara</div>
+      <div class="col-span-2">Kategori</div>
+      <div class="col-span-3">Sasaran &amp; Batas Tutup</div>
+      <div class="col-span-2 text-right">Tindakan</div>
+    </div>
+
+    <!-- Baris Konten Dinamis -->
+    <div id="rekomendasiTableBody" class="divide-y divide-[#32566D]/15"></div>
+  </div>
+
+</section> 
+  <!-- MODAL AI COUNSELOR (FINDER'S PARTNER) -->
+  <div id="aiModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+    <div class="bg-white border-2 border-[#32566D] w-full max-w-lg rounded-2xl shadow-2xl flex flex-col h-[500px] overflow-hidden">
+      <div class="bg-[#CAEAFF] p-4 text-[#32566D] flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-robot text-lg"></i>
+          <div>
+            <h3 class="font-bold text-sm">Finder's Partner — AI Counselor IPB</h3>
+            <p class="text-[10px] opacity-80">Siap menjadi teman diskusi karir, lomba, & organisasi</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeChatModal()" class="text-[#32566D] hover:opacity-75 text-xl font-bold cursor-pointer">&times;</button>
+      </div>
+
+      <div id="chatMessages" class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#FAF6E9]/40 text-sm">
+        <div class="flex items-start gap-2">
+          <div class="bg-[#CAEAFF] text-[#32566D] p-3 rounded-2xl rounded-tl-none max-w-[80%] text-xs leading-relaxed">
+            Halo! Aku Finder's partner pertama. Ada hal atau kebingungan yang ingin Finder curhatkan tentang organisasi, lomba, atau pengembangan diri di IPB?
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 bg-white border-t flex gap-2">
+        <input type="text" id="userInput" placeholder="Tulis curhatanmu di sini..." onkeydown="if(event.key === 'Enter') sendChatMessage()" class="flex-grow px-4 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-[#3B7A87]" />
+        <button type="button" onclick="sendChatMessage()" class="bg-[#3B7A87] hover:bg-[#2D5B66] text-white px-4 py-2 rounded-xl text-sm font-bold transition cursor-pointer">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="w-full text-center py-6 text-xs text-gray-500 z-10">
+    &copy; 2026 PathFinder IPB Project. All rights reserved.
+  </footer>
+
+  <!-- INTEGRASI SCRIPT DATA, RENDER KARTU BERFOTO & AI CHAT -->
+  <script>
+
+    let activeRekomFilter = 'ALL';
+
+function filterRekomendasi(jalur, btnElem) {
+  activeRekomFilter = jalur;
+
+  document.querySelectorAll('.rekom-filter-btn').forEach(btn => {
+    btn.className = 'rekom-filter-btn bg-white hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer';
+  });
+  if (btnElem) {
+    btnElem.className = 'rekom-filter-btn bg-[#2D5B66] text-white border-2 border-[#32566D] text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer';
+  }
+
+  renderRekomendasiTable();
+}
+
+function renderRekomendasiTable() {
+  const tbody = document.getElementById('rekomendasiTableBody');
+  if (!tbody) return;
+
+  const oprekList = (JSON.parse(localStorage.getItem(OPREK_STORAGE_KEY)) || [])
+    .map((item, idx) => ({ ...item, jalur: 'oprek', originalIndex: idx }));
+
+  const academyList = (JSON.parse(localStorage.getItem(ACADEMY_STORAGE_KEY)) || [])
+    .map((item, idx) => ({ ...item, jalur: 'academy', originalIndex: idx }));
+
+  let combined = [...academyList, ...oprekList];
+  if (activeRekomFilter !== 'ALL') {
+    combined = combined.filter(item => item.jalur === activeRekomFilter);
+  }
+
+  if (combined.length === 0) {
+    tbody.innerHTML = `
+      <div class="p-8 text-center text-xs text-gray-500">
+        Belum ada data kegiatan pada jalur ini. Tambahkan terlebih dahulu melalui <b>Portal Path</b>.
+      </div>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = combined.map((item) => {
+    const badgeStyle = item.jalur === 'academy'
+      ? 'bg-[#234E58] text-[#FFEDAC] border-[#32566D]'
+      : 'bg-[#EFE7D3] text-[#2D5B66] border-[#D9A05B]';
+
+    return `
+      <div class="p-5 md:px-6 md:py-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-center hover:bg-[#FAF8F5] transition">
+        
+        <!-- Kolom 1: Thumbnail + Judul + Penyelenggara -->
+        <div class="md:col-span-5 flex items-center gap-3.5">
+          <img src="${escapeHtmlSafe(item.imageUrl || 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=400&q=80')}" 
+               alt="${escapeHtmlSafe(item.judul)}" 
+               class="w-14 h-14 rounded-2xl object-cover border border-[#32566D]/30 shrink-0">
+          <div class="min-w-0">
+            <h4 class="font-bold text-sm text-[#2D5B66] font-serif leading-snug line-clamp-1">
+              ${escapeHtmlSafe(item.judul)}
+            </h4>
+            <p class="text-[11px] text-gray-500 mt-0.5 truncate">
+              ${escapeHtmlSafe(item.penyelenggara || 'IPB University')}
+            </p>
+          </div>
+        </div>
+
+        <!-- Kolom 2: Badge Kategori -->
+        <div class="md:col-span-2">
+          <span class="inline-block border text-[10px] font-extrabold uppercase tracking-wide px-3 py-1 rounded-full ${badgeStyle}">
+            ${escapeHtmlSafe(item.kategori || 'Kegiatan')}
+          </span>
+        </div>
+
+        <!-- Kolom 3: Target & Deadline -->
+        <div class="md:col-span-3 text-xs">
+          <p class="font-semibold text-[#2D4059]">${escapeHtmlSafe(item.targetAngkatan || 'Mahasiswa IPB')}</p>
+          <p class="text-[11px] text-[#3B7A87] font-bold mt-0.5">Tutup: ${escapeHtmlSafe(item.batasWaktu || '-')}</p>
+        </div>
+
+        <!-- Kolom 4: Tombol ke Event Detail -->
+        <div class="md:col-span-2 flex md:justify-end">
+          <a href="event detail.html?type=${item.jalur}&id=${item.originalIndex}" target="_blank"
+             class="w-full md:w-auto text-center bg-[#FFEDAC] hover:bg-[#f5dc82] text-[#2D5B66] border-2 border-[#32566D] text-xs font-extrabold px-4 py-2 rounded-xl shadow-sm transition">
+            Lihat Detail &rarr;
+          </a>
+        </div>
+
+      </div>
+    `;
+  }).join('');
+}
+
+    const OPREK_STORAGE_KEY = 'pathfinder_oprek_data';
+    const ACADEMY_STORAGE_KEY = 'pathfinder_academy_data';
+
+    function escapeHtmlSafe(str) {
+      return String(str || '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[m]));
+    }
+
+    // 1. Auto-seed Data Awal jika localStorage masih kosong
+    (function seedInitialData() {
+      const oprekData = JSON.parse(localStorage.getItem(OPREK_STORAGE_KEY));
+      if (!oprekData || oprekData.length === 0) {
+        localStorage.setItem(OPREK_STORAGE_KEY, JSON.stringify([
+          {
+            judul: "Open Recruitment Panitia MPKMB IPB 63",
+            kategori: "Kepanitiaan",
+            penyelenggara: "BEM KM IPB University",
+            batasWaktu: "2026-11-25",
+            targetAngkatan: "Angkatan 61 & 62",
+            deskripsi: "Bergabunglah menjadi bagian dari panitia penyambutan mahasiswa baru terbesar di IPB! Tersedia divisi Acara, Humas, Logistik, Medis, hingga Media Kreatif.",
+            imageUrl: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80",
+            guidebookUrl: "https://ipb.ac.id",
+            linkPendaftaran: "https://ipb.ac.id",
+            lingkupPendaftaran: "Gratis (Mahasiswa Aktif IPB)",
+            tags: "Leadership, Event Management, Teamwork"
+          },
+          {
+            judul: "Open Recruitment Anggota Baru PSM IPB Agria Swara",
+            kategori: "UKM Seni / Olahraga",
+            penyelenggara: "Paduan Suara Mahasiswa IPB Agria Swara",
+            batasWaktu: "2026-11-30",
+            targetAngkatan: "Angkatan 62 & 63",
+            deskripsi: "Kembangkan bakat tarik suara dan manajemen produksi konser bersama UKM paduan suara berprestasi tingkat internasional.",
+            imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80",
+            guidebookUrl: "https://ipb.ac.id",
+            linkPendaftaran: "https://ipb.ac.id",
+            lingkupPendaftaran: "Gratis (Mahasiswa IPB)",
+            tags: "Seni Musik, Vocal, Manajemen Pertunjukan"
+          },
+          {
+            judul: "Open Recruitment Volunteer IPB Mengajar #13",
+            kategori: "Volunteer",
+            penyelenggara: "Komunitas IPB Mengajar",
+            batasWaktu: "2026-12-05",
+            targetAngkatan: "Semua Angkatan (S1 & Vokasi)",
+            deskripsi: "Program pengabdian masyarakat untuk meningkatkan literasi dan semangat belajar anak-anak di wilayah lingkar kampus Dramaga.",
+            imageUrl: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1000&q=80",
+            guidebookUrl: "https://ipb.ac.id",
+            linkPendaftaran: "https://ipb.ac.id",
+            lingkupPendaftaran: "Gratis (Mahasiswa IPB)",
+            tags: "Social Impact, Teaching, Community Development"
+          }
+        ]));
+      }
+
+      const academyData = JSON.parse(localStorage.getItem(ACADEMY_STORAGE_KEY));
+      if (!academyData || academyData.length === 0) {
+        localStorage.setItem(ACADEMY_STORAGE_KEY, JSON.stringify([
+          {
+            judul: "IPB Business Case Competition 2026",
+            kategori: "Competition",
+            penyelenggara: "Himpunan Mahasiswa Manajemen IPB",
+            batasWaktu: "2026-11-28",
+            targetAngkatan: "S1 / D4 / D3 IPB",
+            deskripsi: "Kompetisi pemecahan masalah bisnis nyata yang berfokus pada inovasi rantai pasok dan digitalisasi agribisnis di sekitar kawasan Dramaga.",
+            imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
+            guidebookUrl: "https://ipb.ac.id",
+            linkPendaftaran: "https://ipb.ac.id",
+            lingkupPendaftaran: "Gratis (Mahasiswa IPB)",
+            tags: "Business Case, Critical Thinking, Agribusiness"
+          },
+          {
+            judul: "Beasiswa Kepemimpinan Tanoto Foundation 2026",
+            kategori: "Scholarship",
+            penyelenggara: "Tanoto Foundation x Ditmawa IPB",
+            batasWaktu: "2026-12-10",
+            targetAngkatan: "Semester 1 & 3 (S1 IPB)",
+            deskripsi: "Program pengembangan kepemimpinan terstruktur disertai dukungan biaya pendidikan dan tunjangan bulanan bagi mahasiswa berprestasi.",
+            imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80",
+            guidebookUrl: "https://ipb.ac.id",
+            linkPendaftaran: "https://ipb.ac.id",
+            lingkupPendaftaran: "Beasiswa Penuh",
+            tags: "Scholarship, Leadership Training, Networking"
+          },
+          {
+            judul: "IPB Data Science & AI Bootcamp",
+            kategori: "Academy & Workshop",
+            penyelenggara: "Himpunan Mahasiswa Ilmu Komputer (Himalkom)",
+            batasWaktu: "2026-12-03",
+            targetAngkatan: "Semua Jurusan IPB",
+            deskripsi: "Pelatihan intensif pengolahan data pertanian modern dan pemodelan machine learning bersama praktisi industri teknologi.",
+            imageUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80",
+            guidebookUrl: "https://ipb.ac.id",
+            linkPendaftaran: "https://ipb.ac.id",
+            lingkupPendaftaran: "Gratis (Kuota Terbatas)",
+            tags: "Data Science, Python, Machine Learning"
+          }
+        ]));
+      }
+    })();
+
+    // 2. Render Kartu Berfoto untuk Section 1: Events, Volunteer, & Organization (Tanpa Tombol Silang Merah)
+    let activeOprekFilter = 'ALL';
+
+function filterOprekCards(category, btnElem) {
+  activeOprekFilter = category;
+
+  document.querySelectorAll('.oprek-filter-btn').forEach(btn => {
+    btn.className = 'oprek-filter-btn bg-[#FAF8F5] hover:bg-[#CAEAFF]/60 text-[#2D5B66] border border-[#32566D]/40 text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer';
+  });
+  if (btnElem) {
+    btnElem.className = 'oprek-filter-btn bg-[#2D5B66] text-white border-2 border-[#32566D] text-xs font-bold px-4 py-1.5 rounded-full transition cursor-pointer';
+  }
+
+  renderOprekCards();
+}
+
+function renderOprekCards() {
+  const container = document.getElementById('oprekContainer');
+  if (!container) return;
+
+  const rawList = JSON.parse(localStorage.getItem(OPREK_STORAGE_KEY)) || [];
+  const fallbackImg = "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80";
+
+  // Pertahankan index asli agar parameter ?type=oprek&id=... tetap akurat saat difilter
+  const filteredList = rawList
+    .map((item, originalIndex) => ({ ...item, originalIndex }))
+    .filter(item => activeOprekFilter === 'ALL' || item.kategori === activeOprekFilter);
+
+  if (filteredList.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full text-center py-12 bg-[#FAF8F5] rounded-2xl border-2 border-dashed border-[#3B7A87]/40">
+        <p class="text-sm font-bold text-[#2D5B66]">Belum ada kegiatan pada kategori "${escapeHtmlSafe(activeOprekFilter)}"</p>
+        <p class="text-xs text-gray-500 mt-1">Pilih kategori lain atau publikasikan event baru melalui Portal Path.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filteredList.map((item) => `
+    <article class="group relative h-[380px] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition duration-300 border-2 border-[#32566D] bg-slate-900 flex flex-col justify-between">
+      <!-- Foto Latar Kartu -->
+      <img src="${escapeHtmlSafe(item.imageUrl || fallbackImg)}" alt="${escapeHtmlSafe(item.judul)}"
+           class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500">
+      
+      <!-- Overlay Gelap Gradasi -->
+      <div class="absolute inset-0 bg-gradient-to-t from-[#10252B] via-[#10252B]/65 to-black/25"></div>
+
+      <!-- Baris Atas: Kategori & Deadline -->
+      <div class="relative z-10 p-5 flex justify-between items-center gap-2">
+        <span class="bg-[#EFE7D3] text-[#2D5B66] border border-[#D9A05B] text-[11px] font-extrabold px-3.5 py-1 rounded-full shadow-sm">
+          ${escapeHtmlSafe(item.kategori || 'Organisasi')}
+        </span>
+        <span class="bg-[#2D5B66]/90 backdrop-blur-md text-[#FFEDAC] text-[11px] font-bold px-3 py-1 rounded-full border border-white/20 shadow">
+          ⏰ s/d ${escapeHtmlSafe(item.batasWaktu)}
+        </span>
+      </div>
+
+      <!-- Baris Bawah: Judul (Cinzel), Deskripsi, Target & Tombol Event Detail -->
+      <div class="relative z-10 p-5 text-white">
+        <p class="text-[11px] font-bold text-[#CAEAFF] uppercase tracking-wider mb-1 truncate">
+          ${escapeHtmlSafe(item.penyelenggara || 'IPB University')}
+        </p>
+        <h3 class="font-bold text-lg md:text-xl font-serif leading-snug mb-1.5 line-clamp-2 text-white">
+          ${escapeHtmlSafe(item.judul)}
+        </h3>
+        <p class="text-xs text-gray-200/90 line-clamp-2 mb-4 leading-relaxed">
+          ${escapeHtmlSafe(item.deskripsi)}
+        </p>
+
+        <div class="pt-3 border-t border-white/20 flex items-center justify-between gap-2">
+          <span class="text-[11px] text-teal-100 font-medium truncate">
+            Target: <strong class="text-[#FFEDAC]">${escapeHtmlSafe(item.targetAngkatan || 'Semua Angkatan')}</strong>
+          </span>
+          <a href="event detail.html?type=oprek&id=${item.originalIndex}" target="_blank"
+             class="shrink-0 bg-[#FFEDAC] hover:bg-white text-[#2D5B66] border border-[#32566D] font-extrabold text-xs px-4 py-2 rounded-xl shadow transition flex items-center gap-1">
+            Event Detail &rarr;
+          </a>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+    // 3. Render Kartu Berfoto untuk Section 2 (Latar Biru): Academy, Scholarship, & Competition
+    function renderAcademyCards() {
+      const track = document.getElementById('academyTrack');
+      if (!track) return;
+
+      const list = JSON.parse(localStorage.getItem(ACADEMY_STORAGE_KEY)) || [];
+      const fallbackImg = "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80";
+
+      track.innerHTML = list.map((item, idx) => `
+        <article class="snap-center shrink-0 w-[82vw] md:w-[460px] h-[340px] md:h-[370px] bg-slate-900 rounded-3xl overflow-hidden shadow-2xl relative border-2 border-white/30 group flex flex-col justify-between">
+          <img src="${escapeHtmlSafe(item.imageUrl || fallbackImg)}" alt="${escapeHtmlSafe(item.judul)}" draggable="false"
+               class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          
+          <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20"></div>
+
+          <!-- Header Badge -->
+          <div class="relative z-10 p-6 flex justify-between items-center">
+            <span class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-3.5 py-1 rounded-full border border-white/30">
+              ${escapeHtmlSafe(item.kategori || 'Academy')}
+            </span>
+            <span class="bg-[#FFEDAC] text-[#1E4D56] text-[11px] font-extrabold px-3 py-1 rounded-full">
+              ⏰ s/d ${escapeHtmlSafe(item.batasWaktu)}
+            </span>
+          </div>
+
+          <!-- Footer Info & Event Detail Button -->
+          <div class="relative z-10 p-6 text-white">
+            <h3 class="text-xl font-bold text-white mb-1.5 line-clamp-2">
+              ${escapeHtmlSafe(item.judul)}
+            </h3>
+            <p class="text-xs text-teal-100/90 line-clamp-2 mb-4 leading-relaxed">
+              ${escapeHtmlSafe(item.deskripsi)}
+            </p>
+
+            <div class="pt-3 border-t border-white/20 flex items-center justify-between gap-2">
+              <span class="text-[11px] text-teal-200 truncate">
+                Target: <strong class="text-white">${escapeHtmlSafe(item.targetAngkatan || 'Mahasiswa IPB')}</strong>
+              </span>
+              <a href="event detail.html?type=academy&id=${idx}" target="_blank"
+                 class="shrink-0 bg-[#FFEDAC] hover:bg-white text-[#1E4D56] font-extrabold text-xs px-4 py-2 rounded-full shadow transition">
+                Event Detail &rarr;
+              </a>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // 4. Carousel Scroll & Drag untuk Academy Section
+    function scrollAcademy(direction) {
+      const track = document.getElementById('academyTrack');
+      if (track) track.scrollBy({ left: direction * 480, behavior: 'smooth' });
+    }
+
+    // 5. Navigasi Tab (Beranda / Kuis / Rekomendasi)
+    window.switchTab = function(tabName) {
+      ['home', 'kuis', 'rekomendasi'].forEach(id => {
+        const el = document.getElementById('tab-' + id);
+        if (el) el.classList.toggle('hidden', id !== tabName);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // 6. Modal & Logika AI Chat (Finder's Partner)
+    window.openChatModal = function() {
+      const modal = document.getElementById('aiModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        const input = document.getElementById('userInput');
+        if (input) input.focus();
+      }
+    };
+
+    window.closeChatModal = function() {
+      const modal = document.getElementById('aiModal');
+      if (modal) modal.classList.add('hidden');
+    };
+
+    window.sendChatMessage = async function() {
+      const input = document.getElementById('userInput');
+      const messages = document.getElementById('chatMessages');
+      if (!input || !messages) return;
+
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      const userDiv = document.createElement('div');
+      userDiv.className = 'flex justify-end my-2';
+      userDiv.innerHTML = `
+        <div class="bg-[#3B7A87] text-white p-3 rounded-2xl rounded-tr-none max-w-[80%] text-xs shadow-sm">
+          ${escapeHtmlSafe(userText)}
+        </div>
+      `;
+      messages.appendChild(userDiv);
+      input.value = '';
+      messages.scrollTop = messages.scrollHeight;
+
+      const typingElem = document.createElement('div');
+      typingElem.className = 'flex items-start gap-2 my-2';
+      typingElem.innerHTML = `
+        <div class="bg-gray-100 text-gray-500 p-2.5 rounded-2xl rounded-tl-none text-xs italic border border-gray-200">
+          🤖 Finder's Partner sedang mengetik...
+        </div>
+      `;
+      messages.appendChild(typingElem);
+      messages.scrollTop = messages.scrollHeight;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userText })
+        });
+        const data = await res.json();
+        typingElem.remove();
+
+        const botDiv = document.createElement('div');
+        botDiv.className = 'flex items-start gap-2 my-2';
+
+        if (res.ok && data.reply) {
+          const formattedReply = data.reply
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+
+          botDiv.innerHTML = `
+            <div class="bg-white text-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[80%] text-xs border border-gray-200 leading-relaxed shadow-sm">
+              🤖 ${formattedReply}
+            </div>
+          `;
+        } else {
+          botDiv.innerHTML = `
+            <div class="bg-red-50 text-red-600 p-3 rounded-2xl rounded-tl-none max-w-[80%] text-xs border border-red-200">
+              <b>Error:</b> ${escapeHtmlSafe(data.error || "Gagal mendapatkan respon AI.")}
+            </div>
+          `;
+        }
+        messages.appendChild(botDiv);
+      } catch (err) {
+        typingElem.remove();
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'flex items-start gap-2 my-2';
+        errorDiv.innerHTML = `
+          <div class="bg-red-50 text-red-600 p-3 rounded-2xl rounded-tl-none max-w-[80%] text-xs border border-red-200">
+            Koneksi ke backend gagal. Jalankan <code>node server.js</code> di terminal terlebih dahulu.
+          </div>
+        `;
+        messages.appendChild(errorDiv);
+      }
+
+      messages.scrollTop = messages.scrollHeight;
+    };
+
+    // Init saat halaman dibuka & saat ada update dari Portal Path
+    document.addEventListener('DOMContentLoaded', () => {
+      renderOprekCards();
+      renderAcademyCards();
+
+      const slider = document.getElementById('academyTrack');
+      if (!slider) return;
+      let isDown = false, startX, scrollLeft;
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.remove('scroll-smooth');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+      slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.add('scroll-smooth'); });
+      slider.addEventListener('mouseup', () => { isDown = false; slider.classList.add('scroll-smooth'); });
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        slider.scrollLeft = scrollLeft - (x - startX) * 1.5;
+      });
+    });
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === OPREK_STORAGE_KEY) renderOprekCards();
+      if (e.key === ACADEMY_STORAGE_KEY) renderAcademyCards();
+    });
+  </script>
+
+  <!-- Script Kuis & Utilitas Tambahan -->
+  <script src="js/js quiz.js"></script>
+  <script src="js/scrool bar.js"></script>
+  
+</body>
+</html>

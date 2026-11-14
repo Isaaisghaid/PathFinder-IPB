@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Finder — Profil & Track Record Mahasiswa | PathFinder IPB</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-image: radial-gradient(#9ac1c9 0.85px, transparent 0.85px);
+      background-size: 24px 24px;
+      background-color: #FAF8F5;
+    }
+    .font-heading {
+      font-family: 'Cinzel', Georgia, serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-[#2D4059] p-4 md:p-8">
+
+  <!-- NAVBAR ATAS -->
+  <header class="max-w-6xl mx-auto mb-8">
+    <nav class="bg-[#CAEAFF]/90 backdrop-blur-md px-6 py-3.5 rounded-2xl shadow-md border-2 border-[#32566D] flex flex-wrap justify-between items-center gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-[#2D5B66] font-bold hover:opacity-80 transition text-sm">
+        <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+      </a>
+      <span class="font-heading font-bold text-[#2D5B66] text-base md:text-lg tracking-wide">
+        ✦ PORTAL FINDER DASHBOARD ✦
+      </span>
+      <a href="portal path.html" class="bg-[#FFEDAC] border-2 border-[#32566D] hover:bg-[#f5dc82] text-[#32566D] px-4 py-1.5 rounded-xl text-xs font-bold shadow-sm transition">
+        Ke Portal Path &rarr;
+      </a>
+    </nav>
+  </header>
+
+  <!-- KONTEN UTAMA -->
+  <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- ============================================================== -->
+    <!-- KOLOM KIRI (4 KOLOM): KARTU IDENTITAS & EDIT PROFIL FINDER     -->
+    <!-- ============================================================== -->
+    <section class="lg:col-span-4 bg-white p-6 rounded-3xl shadow-xl border-2 border-[#3B7A87]/40">
+      
+      <!-- Preview Kartu Mahasiswa IPB -->
+      <div class="bg-gradient-to-br from-[#2D5B66] to-[#3B7A87] text-white p-5 rounded-2xl mb-6 shadow-md relative overflow-hidden">
+        <div class="flex items-center gap-4 relative z-10">
+          <div class="relative w-20 h-20 shrink-0">
+            <img id="displayAvatar" 
+                 src="https://ui-avatars.com/api/?name=Mahasiswa+IPB&background=CAEAFF&color=2D5B66&bold=true" 
+                 alt="Foto Profil"
+                 class="w-full h-full object-cover rounded-2xl border-2 border-[#FFEDAC] shadow">
+            <label for="inputAvatar" title="Ganti Foto Profil"
+                   class="absolute -bottom-2 -right-2 bg-[#FFEDAC] text-[#2D5B66] w-7 h-7 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition shadow border border-[#2D5B66]">
+              <i class="fa-solid fa-camera text-xs"></i>
+            </label>
+            <input type="file" id="inputAvatar" accept="image/*" onchange="previewAvatar(event)" class="hidden">
+          </div>
+
+          <div class="overflow-hidden">
+            <span class="bg-white/20 text-[#FFEDAC] text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              Finder IPB
+            </span>
+            <h1 id="displayNama" class="font-bold text-base truncate mt-1">Mahasiswa IPB</h1>
+            <p id="displayNim" class="text-xs text-teal-100 font-mono">NIM belum diatur</p>
+            <p id="displayProdi" class="text-[11px] text-teal-200/90 truncate mt-0.5">Fakultas / Angkatan</p>
+          </div>
+        </div>
+        <p id="displayBio" class="text-[11px] text-teal-50/90 mt-3 pt-3 border-t border-white/15 italic line-clamp-2">
+          "Siap bertumbuh melalui organisasi, kepanitiaan, kompetisi, dan beasiswa di IPB University."
+        </p>
+      </div>
+
+      <!-- Form Pengaturan Profil -->
+      <form id="formProfile" onsubmit="saveProfile(event)" class="space-y-3.5">
+        <h2 class="font-bold text-sm text-[#2D5B66] border-b border-gray-100 pb-2">
+          <i class="fa-solid fa-id-card mr-1.5 text-[#3B7A87]"></i> Lengkapi Data Diri
+        </h2>
+
+        <div>
+          <label class="block text-xs font-bold text-[#2D5B66] mb-1">Nama Lengkap</label>
+          <input type="text" id="profileName" required placeholder="Contoh: Raka Pratama" 
+                 class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-[#2D5B66] mb-1">NIM IPB</label>
+            <input type="text" id="profileNim" required placeholder="G1401231000" 
+                   class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87] uppercase">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2D5B66] mb-1">Angkatan</label>
+            <input type="text" id="profileAngkatan" required placeholder="Angkatan 61" 
+                   class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[#2D5B66] mb-1">Fakultas / Departemen</label>
+          <input type="text" id="profileProdi" required placeholder="Contoh: FMIPA - Ilmu Komputer" 
+                 class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[#2D5B66] mb-1">Target & Minat Pengembangan Diri</label>
+          <textarea id="profileBio" rows="2" placeholder="Contoh: Tertarik pada Business Case, Data Analytics, dan Kepanitiaan Kampus" 
+                    class="w-full px-3.5 py-2 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]"></textarea>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button type="submit" class="flex-1 bg-[#3B7A87] hover:bg-[#2D5B66] text-white py-2.5 rounded-xl font-bold text-xs transition shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Profil
+          </button>
+          <button type="button" onclick="deleteProfile()" title="Reset Data Profil" 
+                  class="bg-red-50 hover:bg-red-100 text-red-600 px-3.5 py-2.5 rounded-xl font-bold text-xs transition border border-red-200 cursor-pointer">
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- KOLOM KANAN (8 KOLOM): STATISTIK, HASIL KUIS, & TRACK RECORD   -->
+    <!-- ============================================================== -->
+    <div class="lg:col-span-8 space-y-6">
+      
+      <!-- BARIS 1: RINGKASAN STATISTIK AKTIVITAS -->
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded-2xl border border-teal-100 shadow-sm text-center">
+          <span class="text-2xl font-extrabold text-[#2D5B66]" id="statTotal">0</span>
+          <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Total Diikuti</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-amber-200/70 shadow-sm text-center">
+          <span class="text-2xl font-extrabold text-amber-600" id="statProses">0</span>
+          <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Dalam Proses</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-emerald-200/70 shadow-sm text-center">
+          <span class="text-2xl font-extrabold text-emerald-600" id="statDiterima">0</span>
+          <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Lolos / Diterima</p>
+        </div>
+      </div>
+
+      <!-- BARIS 2: HASIL ANALISIS KUIS MINAT BAKAT -->
+      <section class="bg-[#EFE7D3] p-6 rounded-3xl border-2 border-[#D9A05B]/70 shadow-md">
+        <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+          <div>
+            <span class="bg-[#D9A05B] text-[#2D4059] text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider">
+              ✦ Profil Bakat Finder ✦
+            </span>
+            <h2 class="font-bold text-lg text-[#2D5B66] font-heading mt-1.5">Hasil Analisis Kuis Minat & Bakat</h2>
+          </div>
+          <a href="index.html" onclick="localStorage.setItem('open_tab_on_load', 'kuis')" 
+             class="bg-white hover:bg-[#FAF6E9] text-[#2D5B66] border border-[#32566D] text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition">
+            <i class="fa-solid fa-compass mr-1"></i> Isi / Ulangi Kuis
+          </a>
+        </div>
+        
+        <div class="bg-white/90 p-4 rounded-2xl border border-[#D9A05B]/30">
+          <div id="finderProfileSummary" class="text-xs text-gray-700 leading-relaxed">
+            Belum ada hasil kuis tersimpan. Klik tombol <b>Isi / Ulangi Kuis</b> di atas untuk mengetahui rekomendasi organisasi, lomba, dan beasiswa yang paling cocok dengan potensimu.
+          </div>
+        </div>
+      </section>
+
+      <!-- BARIS 3: TRACK RECORD PENDAFTARAN KEGIATAN (TERHUBUNG KE EVENT DETAIL) -->
+      <section class="bg-white p-6 rounded-3xl border-2 border-[#3B7A87]/25 shadow-md">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-5 border-b border-gray-100 pb-4">
+          <div>
+            <h2 class="font-bold text-lg text-[#2D5B66] font-heading">Track Record & Peluang Diikuti</h2>
+            <p class="text-xs text-gray-500 mt-0.5">Otomatis tercatat saat kamu menekan tombol <b>Daftar Event Sekarang</b> pada halaman detail kegiatan</p>
+          </div>
+          <a href="index.html#chooseJourney" class="bg-[#CAEAFF] hover:bg-[#8ABBDA] text-[#2D5B66] text-xs font-bold px-4 py-2 rounded-xl transition">
+            + Cari Event Baru
+          </a>
+        </div>
+
+        <!-- Daftar Dinamis dari localStorage -->
+        <div id="savedOrganisasiList" class="space-y-3"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const PROFILE_KEY = 'pathfinder_user_profile';
+    const SAVED_ORGS_KEY = 'pathfinder_saved_orgs';
+    const QUIZ_RESULT_KEY = 'pathfinder_quiz_result';
+
+    function escapeHtmlSafe(str) {
+      return String(str || '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[m]));
+    }
+
+    // 1. Muat Profil Mahasiswa
+    function loadProfile() {
+      const data = JSON.parse(localStorage.getItem(PROFILE_KEY));
+      if (!data) return;
+
+      if (data.nama) {
+        document.getElementById('profileName').value = data.nama;
+        document.getElementById('displayNama').textContent = data.nama;
+      }
+      if (data.nim) {
+        document.getElementById('profileNim').value = data.nim;
+        document.getElementById('displayNim').textContent = data.nim.toUpperCase();
+      }
+      if (data.angkatan) {
+        document.getElementById('profileAngkatan').value = data.angkatan;
+      }
+      if (data.prodi) {
+        document.getElementById('profileProdi').value = data.prodi;
+      }
+      if (data.prodi || data.angkatan) {
+        document.getElementById('displayProdi').textContent = `${data.prodi || 'IPB University'} • ${data.angkatan || ''}`;
+      }
+      if (data.bio) {
+        document.getElementById('profileBio').value = data.bio;
+        document.getElementById('displayBio').textContent = `"${data.bio}"`;
+      }
+      if (data.avatar) {
+        document.getElementById('displayAvatar').src = data.avatar;
+      }
+    }
+
+    function saveProfile(e) {
+      e.preventDefault();
+      const nama = document.getElementById('profileName').value.trim();
+      const nim = document.getElementById('profileNim').value.trim().toUpperCase();
+      const angkatan = document.getElementById('profileAngkatan').value.trim();
+      const prodi = document.getElementById('profileProdi').value.trim();
+      const bio = document.getElementById('profileBio').value.trim();
+      const currentAvatar = document.getElementById('displayAvatar').src;
+
+      const avatar = currentAvatar.includes('ui-avatars.com')
+        ? `https://ui-avatars.com/api/?name=${encodeURIComponent(nama)}&background=CAEAFF&color=2D5B66&bold=true`
+        : currentAvatar;
+
+      const profileData = { nama, nim, angkatan, prodi, bio, avatar };
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(profileData));
+      loadProfile();
+      alert('✅ Profil Finder berhasil disimpan!');
+    }
+
+    function previewAvatar(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.getElementById('displayAvatar').src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function deleteProfile() {
+      if (!confirm('Reset seluruh data profil mahasiswa di perangkat ini?')) return;
+      localStorage.removeItem(PROFILE_KEY);
+      location.reload();
+    }
+
+    // 2. Muat Hasil Kuis
+    function loadQuizSummary() {
+      const result = localStorage.getItem(QUIZ_RESULT_KEY);
+      if (result) {
+        document.getElementById('finderProfileSummary').innerHTML = result;
+      }
+    }
+
+    // 3. Render Track Record & Sinkronkan Statistik
+    function renderTrackRecord() {
+      const container = document.getElementById('savedOrganisasiList');
+      const savedList = JSON.parse(localStorage.getItem(SAVED_ORGS_KEY)) || [];
+
+      // Update angka statistik
+      document.getElementById('statTotal').textContent = savedList.length;
+      document.getElementById('statDiterima').textContent = savedList.filter(i => i.status === 'Lolos / Diterima').length;
+      document.getElementById('statProses').textContent = savedList.filter(i => i.status !== 'Lolos / Diterima').length;
+
+      if (savedList.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 px-4 bg-[#FAF8F5] rounded-2xl border border-dashed border-teal-200">
+            <p class="text-sm font-bold text-[#2D5B66]">Belum ada riwayat pendaftaran kegiatan</p>
+            <p class="text-xs text-gray-500 mt-1 max-w-md mx-auto">
+              Buka salah satu kartu di beranda, klik <b>Event Detail →</b>, lalu tekan <b>Daftar Event Sekarang</b> agar otomatis tercatat di sini.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = savedList.map((item, idx) => {
+        const statusColor = item.status === 'Lolos / Diterima'
+          ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+          : item.status === 'Tahap Wawancara / Seleksi'
+          ? 'bg-amber-100 text-amber-800 border-amber-300'
+          : 'bg-sky-100 text-sky-800 border-sky-300';
+
+        return `
+          <div class="p-4 bg-[#FAF8F5] rounded-2xl border border-[#3B7A87]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-[#3B7A87]/50 transition">
+            <div>
+              <span class="bg-[#EFE7D3] text-[#2D5B66] text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wide">
+                ${escapeHtmlSafe(item.kategori || 'Kegiatan IPB')}
+              </span>
+              <h3 class="font-bold text-sm text-[#2D5B66] mt-1.5">${escapeHtmlSafe(item.judul)}</h3>
+              <p class="text-[11px] text-gray-500 mt-0.5">
+                Tercatat pada: ${escapeHtmlSafe(item.tanggalDaftar || 'Baru saja')}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2 self-end sm:self-center">
+              <select onchange="updateOrgStatus(${idx}, this.value)" 
+                      class="text-xs font-bold px-3 py-1.5 rounded-xl border ${statusColor} focus:outline-none cursor-pointer">
+                <option value="Berkas Terkirim" ${item.status === 'Berkas Terkirim' ? 'selected' : ''}>Berkas Terkirim</option>
+                <option value="Tahap Wawancara / Seleksi" ${item.status === 'Tahap Wawancara / Seleksi' ? 'selected' : ''}>Tahap Wawancara / Seleksi</option>
+                <option value="Lolos / Diterima" ${item.status === 'Lolos / Diterima' ? 'selected' : ''}>Lolos / Diterima</option>
+              </select>
+
+              <button type="button" onclick="removeSavedOrg(${idx})" title="Hapus dari Track Record"
+                      class="w-8 h-8 rounded-xl bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 border border-gray-200 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateOrgStatus(index, newStatus) {
+      const savedList = JSON.parse(localStorage.getItem(SAVED_ORGS_KEY)) || [];
+      if (!savedList[index]) return;
+      savedList[index].status = newStatus;
+      localStorage.setItem(SAVED_ORGS_KEY, JSON.stringify(savedList));
+      renderTrackRecord();
+    }
+
+    function removeSavedOrg(index) {
+      const savedList = JSON.parse(localStorage.getItem(SAVED_ORGS_KEY)) || [];
+      savedList.splice(index, 1);
+      localStorage.setItem(SAVED_ORGS_KEY, JSON.stringify(savedList));
+      renderTrackRecord();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProfile();
+      loadQuizSummary();
+      renderTrackRecord();
+    });
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === SAVED_ORGS_KEY) renderTrackRecord();
+      if (e.key === QUIZ_RESULT_KEY) loadQuizSummary();
+      if (e.key === PROFILE_KEY) loadProfile();
+    });
+  </script>
+</body>
+</html>

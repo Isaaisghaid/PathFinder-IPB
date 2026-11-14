@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Path — Publishing Platform | PathFinder IPB</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-image: radial-gradient(#9ac1c9 0.85px, transparent 0.85px);
+      background-size: 24px 24px;
+      background-color: #FAF8F5;
+    }
+    .font-heading {
+      font-family: 'Cinzel', Georgia, serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-[#2D4059] p-4 md:p-8 relative overflow-x-hidden">
+
+  <!-- SPARKLE BACKGROUND DEKORASI -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <svg class="absolute top-16 left-8 w-6 h-6 text-[#3B7A87] opacity-40" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+    <svg class="absolute top-28 right-12 w-5 h-5 text-[#D9A05B] opacity-50" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+    <svg class="absolute bottom-20 left-12 w-7 h-7 text-[#3B7A87] opacity-30" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+    </svg>
+  </div>
+
+  <!-- NAVBAR MELAYANG -->
+  <header class="max-w-6xl mx-auto mb-8 relative z-10">
+    <nav class="bg-[#CAEAFF]/90 backdrop-blur-md px-6 py-3.5 rounded-2xl shadow-md border-2 border-[#32566D] flex flex-wrap justify-between items-center gap-4">
+      <a href="index.html" class="flex items-center gap-2 text-[#2D5B66] font-bold hover:opacity-80 transition text-sm">
+        <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+      </a>
+      <span class="font-heading font-bold text-[#2D5B66] text-base md:text-lg tracking-wide">
+        ✦ PORTAL PATH PUBLISHING ✦
+      </span>
+      <a href="Portal finder.html" class="bg-[#FFEDAC] border-2 border-[#32566D] hover:bg-[#f5dc82] text-[#32566D] px-4 py-1.5 rounded-xl text-xs font-bold shadow-sm transition">
+        Ke Portal Finder &rarr;
+      </a>
+    </nav>
+  </header>
+
+  <!-- HERO HEADER PORTAL PATH -->
+  <section class="max-w-6xl mx-auto text-center mb-8 relative z-10">
+    <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#2D7A89] bg-teal-50 px-3.5 py-1 rounded-full border border-teal-200/80">
+      ✦ ORGANIZER & COMMITTEE HUB ✦
+    </span>
+    <h1 class="text-2xl md:text-4xl font-extrabold text-[#2D5B66] font-serif mt-3 tracking-tight">
+      Publikasikan & Kelola Kegiatan IPB
+    </h1>
+    <p class="text-xs md:text-sm text-gray-600 max-w-2xl mx-auto mt-2">
+      Upload kegiatan baru atau perbarui poster, guidebook, dan detail kegiatan yang sudah tayang di beranda PathFinder IPB.
+    </p>
+  </section>
+
+  <!-- SPLIT SCREEN PUBLISHING FORM -->
+  <main id="formSection" class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+    
+    <!-- ============================================================== -->
+    <!-- KOLOM KIRI (TEAL-BIRU): ACADEMY, SCHOLARSHIP, & COMPETITION    -->
+    <!-- ============================================================== -->
+    <div id="cardAcademyForm" class="bg-gradient-to-br from-[#234E58] via-[#2B5F6B] to-[#1E434C] p-6 md:p-8 rounded-3xl border-2 border-[#32566D] text-white flex flex-col justify-between shadow-xl relative">
+      <div class="flex items-center justify-between gap-2 mb-4">
+        <span class="bg-[#CAEAFF] text-[#1E4D56] text-[10px] font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+          🎓 Path 02 — Academy & Achievement
+        </span>
+        <span id="acadModeBadge" class="text-[11px] text-teal-200 font-semibold">Mode: Publikasi Baru</span>
+      </div>
+
+      <div>
+        <div class="mb-5 border-b border-white/15 pb-4">
+          <h2 class="font-bold text-xl text-[#FFEDAC] font-serif">Academy, Scholarship & Competition</h2>
+          <p class="text-xs text-teal-100/85 mt-1">Publikasikan atau edit informasi beasiswa, kompetisi ilmiah/bisnis, dan bootcamp.</p>
+        </div>
+
+        <form id="formAcademy" onsubmit="publishToAcademy(event)" class="space-y-4">
+          <input type="hidden" id="acadEditIndex" value="-1">
+
+          <div>
+            <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Kategori Peluang</label>
+            <select id="acadCategory" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white border border-white/25 focus:outline-none focus:border-[#FFEDAC]">
+              <option value="Scholarship" class="text-gray-800">Scholarship (Beasiswa)</option>
+              <option value="Competition" class="text-gray-800">Competition (Lomba / Riset)</option>
+              <option value="Academy & Workshop" class="text-gray-800">Academy & Workshop</option>
+              <option value="Exchange & Fellowship" class="text-gray-800">Exchange & Fellowship</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Judul Kegiatan / Beasiswa / Lomba</label>
+            <input type="text" id="acadTitle" required placeholder="Contoh: IPB Business Case Competition 2026" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white placeholder-teal-200/50 border border-white/25 focus:outline-none focus:border-[#FFEDAC]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Penyelenggara</label>
+            <input type="text" id="acadOrganizer" required placeholder="Contoh: Himpunan Mahasiswa Manajemen IPB" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white placeholder-teal-200/50 border border-white/25 focus:outline-none focus:border-[#FFEDAC]">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Tanggal Batas Tutup</label>
+              <input type="date" id="acadDeadline" required class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white border border-white/25 focus:outline-none focus:border-[#FFEDAC]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Target Peserta / Angkatan</label>
+              <input type="text" id="acadTarget" required placeholder="S1 / D4 / Angkatan 61-63" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white placeholder-teal-200/50 border border-white/25 focus:outline-none focus:border-[#FFEDAC]">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#CAEAFF] mb-1">📸 Upload Foto / Poster Baru <span class="font-normal text-teal-200">(Opsional saat edit)</span></label>
+            <input type="file" id="acadPhotoFile" accept="image/*" onchange="previewImage(event, 'acadPreview', 'acadPreviewBox')" class="w-full text-xs text-teal-100 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:bg-[#FFEDAC] file:text-[#2D5B66] file:font-bold cursor-pointer">
+            <div id="acadPreviewBox" class="mt-2 hidden">
+              <img id="acadPreview" class="h-28 w-full rounded-2xl object-cover border-2 border-white/30 shadow">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Deskripsi Singkat & Benefit</label>
+            <textarea id="acadDesc" rows="2" required placeholder="Jelaskan fokus kompetisi, cakupan beasiswa, atau materi academy..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white placeholder-teal-200/50 border border-white/25 focus:outline-none focus:border-[#FFEDAC]"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Link Guidebook (PDF / Drive)</label>
+              <input type="url" id="acadGuidebook" required placeholder="https://drive.google.com/..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white placeholder-teal-200/50 border border-white/25 focus:outline-none focus:border-[#FFEDAC]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-[#CAEAFF] mb-1">Link Pendaftaran</label>
+              <input type="url" id="acadRegisterUrl" required placeholder="https://ipb.link/daftar..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white/10 text-white placeholder-teal-200/50 border border-white/25 focus:outline-none focus:border-[#FFEDAC]">
+            </div>
+          </div>
+
+          <div class="flex gap-2 pt-2">
+            <button type="submit" id="acadSubmitBtn" class="flex-1 bg-[#FFEDAC] hover:bg-[#f5dc82] text-[#2D5B66] border-2 border-[#32566D] py-3 rounded-xl font-extrabold text-xs transition shadow-md cursor-pointer">
+              🎓 Publish ke Academy, Scholarship & Competition
+            </button>
+            <button type="button" id="acadCancelEditBtn" onclick="cancelEditAcademy()" class="hidden bg-white/15 hover:bg-white/25 text-white border border-white/30 px-4 py-3 rounded-xl font-bold text-xs transition cursor-pointer">
+              Batal
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- KOLOM KANAN (PUTIH KREM): EVENTS, VOLUNTEER, & ORGANIZATION    -->
+    <!-- ============================================================== -->
+    <div id="cardOprekForm" class="bg-white/95 backdrop-blur-md p-6 md:p-8 rounded-3xl border-2 border-[#32566D] flex flex-col justify-between shadow-xl relative">
+      <div class="flex items-center justify-between gap-2 mb-4">
+        <span class="bg-[#EFE7D3] text-[#2D5B66] border border-[#D9A05B] text-[10px] font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider">
+          🚀 Path 01 — Events & Organization
+        </span>
+        <span id="oprekModeBadge" class="text-[11px] text-[#3B7A87] font-semibold">Mode: Publikasi Baru</span>
+      </div>
+
+      <div>
+        <div class="mb-5 border-b border-gray-100 pb-4">
+          <h2 class="font-bold text-xl text-[#2D5B66] font-serif">Open Recruitment & Event IPB</h2>
+          <p class="text-xs text-gray-500 mt-1">Publikasikan atau edit pendaftaran kepanitiaan, pengurus UKM, organisasi kampus, maupun volunteer.</p>
+        </div>
+
+        <form id="formOprek" onsubmit="publishToOprek(event)" class="space-y-4">
+          <input type="hidden" id="oprekEditIndex" value="-1">
+
+          <div>
+            <label class="block text-xs font-bold text-[#2D5B66] mb-1">Kategori Kegiatan</label>
+            <select id="oprekCategory" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87] bg-[#FAF8F5]">
+              <option value="Organisasi Kampus">Organisasi Kampus</option>
+              <option value="UKM Seni / Olahraga">UKM Seni / Olahraga</option>
+              <option value="Kepanitiaan">Kepanitiaan</option>
+              <option value="Volunteer">Volunteer / Pengabdian</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#2D5B66] mb-1">Judul Oprek / Acara</label>
+            <input type="text" id="oprekTitle" required placeholder="Contoh: Oprek Panitia MPKMB IPB 63" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#2D5B66] mb-1">Penyelenggara</label>
+            <input type="text" id="oprekOrganizer" required placeholder="Contoh: BEM KM IPB University" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-[#2D5B66] mb-1">Tanggal Batas Tutup</label>
+              <input type="date" id="oprekDeadlineDate" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87] bg-white">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-[#2D5B66] mb-1">Target Angkatan</label>
+              <input type="text" id="oprekTarget" required placeholder="Angkatan 61 & 62" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#2D5B66] mb-1">📸 Upload Foto / Poster Baru <span class="font-normal text-gray-400">(Opsional saat edit)</span></label>
+            <input type="file" id="oprekPhotoFile" accept="image/*" onchange="previewImage(event, 'oprekPreview', 'oprekPreviewBox')" class="w-full text-xs text-gray-600 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:bg-[#CAEAFF] file:text-[#2D5B66] file:font-bold cursor-pointer">
+            <div id="oprekPreviewBox" class="mt-2 hidden">
+              <img id="oprekPreview" class="h-28 w-full rounded-2xl object-cover border border-gray-200 shadow-sm">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-[#2D5B66] mb-1">Deskripsi Singkat Divisi / Persyaratan</label>
+            <textarea id="oprekDesc" rows="2" required placeholder="Terbuka untuk divisi Acara, Humas, Medis..." class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-[#2D5B66] mb-1">Link Guidebook (PDF / Drive)</label>
+              <input type="url" id="oprekGuidebook" required placeholder="https://drive.google.com/..." class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-[#2D5B66] mb-1">Link Pendaftaran</label>
+              <input type="url" id="oprekRegisterUrl" required placeholder="https://ipb.link/oprek..." class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:border-[#3B7A87]">
+            </div>
+          </div>
+
+          <div class="flex gap-2 pt-2">
+            <button type="submit" id="oprekSubmitBtn" class="flex-1 bg-[#8ABBDA] hover:bg-[#CAEAFF] text-[#2D5B66] border-2 border-[#32566D] py-3 rounded-xl font-extrabold text-xs transition shadow-md cursor-pointer">
+              🚀 Publish ke Events, Volunteer & Organization
+            </button>
+            <button type="button" id="oprekCancelEditBtn" onclick="cancelEditOprek()" class="hidden bg-gray-100 hover:bg-gray-200 text-gray-700 border-2 border-gray-300 px-4 py-3 rounded-xl font-bold text-xs transition cursor-pointer">
+              Batal
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- PANEL KELOLA PUBLIKASI AKTIF (EDIT & HAPUS ORGANISASI/EVENT)   -->
+  <!-- ============================================================== -->
+  <section class="max-w-6xl mx-auto mt-12 relative z-10 bg-white/95 backdrop-blur-md p-6 md:p-8 rounded-3xl border-2 border-[#32566D] shadow-xl">
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-6 border-b border-gray-200 pb-4">
+      <div>
+        <span class="bg-[#FFEDAC] text-[#2D5B66] border border-[#32566D] text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider">
+          ⚙️ Organizer Control Panel
+        </span>
+        <h2 class="text-xl md:text-2xl font-extrabold text-[#2D5B66] font-serif mt-2">
+          Kelola Publikasi Aktif (Edit & Hapus)
+        </h2>
+        <p class="text-xs text-gray-500 mt-0.5">
+          Periksa kembali poster, judul, deadline, atau link guidebook kegiatan yang sedang tayang di beranda.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Daftar Aktif Path 02 (Academy) -->
+      <div>
+        <h3 class="text-sm font-extrabold text-[#234E58] uppercase tracking-wider mb-3 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#234E58]"></span> Daftar Academy, Scholarship & Competition
+        </h3>
+        <div id="manageAcademyList" class="space-y-3"></div>
+      </div>
+
+      <!-- Daftar Aktif Path 01 (Oprec) -->
+      <div>
+        <h3 class="text-sm font-extrabold text-[#3B7A87] uppercase tracking-wider mb-3 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#3B7A87]"></span> Daftar Events, Volunteer & Organization
+        </h3>
+        <div id="manageOprekList" class="space-y-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="w-full text-center py-8 text-xs text-gray-500 relative z-10">
+    &copy; 2026 PathFinder IPB Project. All rights reserved.
+  </footer>
+
+  <script>
+    const OPREK_KEY = 'pathfinder_oprek_data';
+    const ACADEMY_KEY = 'pathfinder_academy_data';
+    const DEFAULT_OPREK_IMG = "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80";
+    const DEFAULT_ACAD_IMG = "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80";
+
+    function escapeHtmlSafe(str) {
+      return String(str || '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[m]));
+    }
+
+    function previewImage(event, imgId, boxId) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.getElementById(imgId).src = reader.result;
+        document.getElementById(boxId).classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function readFileAsDataURL(fileInput, fallbackUrl) {
+      return new Promise((resolve) => {
+        const file = fileInput.files[0];
+        if (!file) {
+          resolve(fallbackUrl);
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => resolve(fallbackUrl);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // =========================================================================
+    // PUBLISH / SIMPAN EDIT KE PATH 01 (OPREK / ORGANISASI / VOLUNTEER)
+    // =========================================================================
+    async function publishToOprek(e) {
+      e.preventDefault();
+      const existing = JSON.parse(localStorage.getItem(OPREK_KEY)) || [];
+      const editIdx = parseInt(document.getElementById('oprekEditIndex').value, 10);
+
+      // Pertahankan foto lama jika sedang mode edit dan tidak memilih file foto baru
+      const oldImage = (editIdx >= 0 && existing[editIdx]) ? existing[editIdx].imageUrl : DEFAULT_OPREK_IMG;
+      const imageUrl = await readFileAsDataURL(document.getElementById('oprekPhotoFile'), oldImage);
+
+      const itemData = {
+        kategori: document.getElementById('oprekCategory').value,
+        judul: document.getElementById('oprekTitle').value.trim(),
+        penyelenggara: document.getElementById('oprekOrganizer').value.trim(),
+        batasWaktu: document.getElementById('oprekDeadlineDate').value,
+        targetAngkatan: document.getElementById('oprekTarget').value.trim(),
+        deskripsi: document.getElementById('oprekDesc').value.trim(),
+        guidebookUrl: document.getElementById('oprekGuidebook').value.trim(),
+        linkPendaftaran: document.getElementById('oprekRegisterUrl').value.trim(),
+        imageUrl: imageUrl,
+        lingkupPendaftaran: "Gratis (Mahasiswa IPB)",
+        tags: "Leadership, Teamwork, Organization, IPB University"
+      };
+
+      if (editIdx >= 0 && existing[editIdx]) {
+        existing[editIdx] = itemData;
+        alert('✅ Perubahan pada kegiatan berhasil disimpan!');
+      } else {
+        existing.unshift(itemData);
+        alert('✅ Berhasil dipublish ke bagian Events, Volunteer, & Organization!');
+      }
+
+      localStorage.setItem(OPREK_KEY, JSON.stringify(existing));
+      cancelEditOprek();
+      renderManageLists();
+    }
+
+    function startEditOprek(index) {
+      const list = JSON.parse(localStorage.getItem(OPREK_KEY)) || [];
+      const item = list[index];
+      if (!item) return;
+
+      document.getElementById('oprekEditIndex').value = index;
+      document.getElementById('oprekCategory').value = item.kategori || 'Organisasi Kampus';
+      document.getElementById('oprekTitle').value = item.judul || '';
+      document.getElementById('oprekOrganizer').value = item.penyelenggara || '';
+      document.getElementById('oprekDeadlineDate').value = item.batasWaktu || '';
+      document.getElementById('oprekTarget').value = item.targetAngkatan || '';
+      document.getElementById('oprekDesc').value = item.deskripsi || '';
+      document.getElementById('oprekGuidebook').value = item.guidebookUrl || '';
+      document.getElementById('oprekRegisterUrl').value = item.linkPendaftaran || '';
+
+      if (item.imageUrl) {
+        document.getElementById('oprekPreview').src = item.imageUrl;
+        document.getElementById('oprekPreviewBox').classList.remove('hidden');
+      }
+
+      document.getElementById('oprekModeBadge').textContent = '✏️ Mode: Mengedit Data';
+      document.getElementById('oprekModeBadge').className = 'text-[11px] bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full font-bold';
+      document.getElementById('oprekSubmitBtn').innerHTML = '💾 Simpan Perubahan Oprek';
+      document.getElementById('oprekCancelEditBtn').classList.remove('hidden');
+
+      document.getElementById('cardOprekForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function cancelEditOprek() {
+      document.getElementById('formOprek').reset();
+      document.getElementById('oprekEditIndex').value = '-1';
+      document.getElementById('oprekPreviewBox').classList.add('hidden');
+      document.getElementById('oprekModeBadge').textContent = 'Mode: Publikasi Baru';
+      document.getElementById('oprekModeBadge').className = 'text-[11px] text-[#3B7A87] font-semibold';
+      document.getElementById('oprekSubmitBtn').innerHTML = '🚀 Publish ke Events, Volunteer & Organization';
+      document.getElementById('oprekCancelEditBtn').classList.add('hidden');
+    }
+
+    function deleteOprekItem(index) {
+      const list = JSON.parse(localStorage.getItem(OPREK_KEY)) || [];
+      const item = list[index];
+      if (!item) return;
+
+      if (!confirm(`Yakin ingin menghapus "${item.judul}" dari beranda?`)) return;
+      list.splice(index, 1);
+      localStorage.setItem(OPREK_KEY, JSON.stringify(list));
+
+      if (parseInt(document.getElementById('oprekEditIndex').value, 10) === index) {
+        cancelEditOprek();
+      }
+      renderManageLists();
+    }
+
+    // =========================================================================
+    // PUBLISH / SIMPAN EDIT KE PATH 02 (ACADEMY, SCHOLARSHIP, & COMPETITION)
+    // =========================================================================
+    async function publishToAcademy(e) {
+      e.preventDefault();
+      const existing = JSON.parse(localStorage.getItem(ACADEMY_KEY)) || [];
+      const editIdx = parseInt(document.getElementById('acadEditIndex').value, 10);
+
+      const oldImage = (editIdx >= 0 && existing[editIdx]) ? existing[editIdx].imageUrl : DEFAULT_ACAD_IMG;
+      const imageUrl = await readFileAsDataURL(document.getElementById('acadPhotoFile'), oldImage);
+
+      const itemData = {
+        kategori: document.getElementById('acadCategory').value,
+        judul: document.getElementById('acadTitle').value.trim(),
+        penyelenggara: document.getElementById('acadOrganizer').value.trim(),
+        batasWaktu: document.getElementById('acadDeadline').value,
+        targetAngkatan: document.getElementById('acadTarget').value.trim(),
+        deskripsi: document.getElementById('acadDesc').value.trim(),
+        guidebookUrl: document.getElementById('acadGuidebook').value.trim(),
+        linkPendaftaran: document.getElementById('acadRegisterUrl').value.trim(),
+        imageUrl: imageUrl,
+        lingkupPendaftaran: "Mahasiswa IPB University",
+        tags: "Academic Excellence, Scholarship, Competition, Innovation"
+      };
+
+      if (editIdx >= 0 && existing[editIdx]) {
+        existing[editIdx] = itemData;
+        alert('✅ Perubahan pada peluang Academy/Beasiswa/Lomba berhasil disimpan!');
+      } else {
+        existing.unshift(itemData);
+        alert('🎓 Berhasil dipublish ke bagian Academy, Scholarship, & Competition!');
+      }
+
+      localStorage.setItem(ACADEMY_KEY, JSON.stringify(existing));
+      cancelEditAcademy();
+      renderManageLists();
+    }
+
+    function startEditAcademy(index) {
+      const list = JSON.parse(localStorage.getItem(ACADEMY_KEY)) || [];
+      const item = list[index];
+      if (!item) return;
+
+      document.getElementById('acadEditIndex').value = index;
+      document.getElementById('acadCategory').value = item.kategori || 'Scholarship';
+      document.getElementById('acadTitle').value = item.judul || '';
+      document.getElementById('acadOrganizer').value = item.penyelenggara || '';
+      document.getElementById('acadDeadline').value = item.batasWaktu || '';
+      document.getElementById('acadTarget').value = item.targetAngkatan || '';
+      document.getElementById('acadDesc').value = item.deskripsi || '';
+      document.getElementById('acadGuidebook').value = item.guidebookUrl || '';
+      document.getElementById('acadRegisterUrl').value = item.linkPendaftaran || '';
+
+      if (item.imageUrl) {
+        document.getElementById('acadPreview').src = item.imageUrl;
+        document.getElementById('acadPreviewBox').classList.remove('hidden');
+      }
+
+      document.getElementById('acadModeBadge').textContent = '✏️ Mode: Mengedit Data';
+      document.getElementById('acadModeBadge').className = 'text-[11px] bg-[#FFEDAC] text-[#234E58] px-2.5 py-0.5 rounded-full font-bold';
+      document.getElementById('acadSubmitBtn').innerHTML = '💾 Simpan Perubahan Peluang';
+      document.getElementById('acadCancelEditBtn').classList.remove('hidden');
+
+      document.getElementById('cardAcademyForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function cancelEditAcademy() {
+      document.getElementById('formAcademy').reset();
+      document.getElementById('acadEditIndex').value = '-1';
+      document.getElementById('acadPreviewBox').classList.add('hidden');
+      document.getElementById('acadModeBadge').textContent = 'Mode: Publikasi Baru';
+      document.getElementById('acadModeBadge').className = 'text-[11px] text-teal-200 font-semibold';
+      document.getElementById('acadSubmitBtn').innerHTML = '🎓 Publish ke Academy, Scholarship & Competition';
+      document.getElementById('acadCancelEditBtn').classList.add('hidden');
+    }
+
+    function deleteAcademyItem(index) {
+      const list = JSON.parse(localStorage.getItem(ACADEMY_KEY)) || [];
+      const item = list[index];
+      if (!item) return;
+
+      if (!confirm(`Yakin ingin menghapus "${item.judul}" dari beranda?`)) return;
+      list.splice(index, 1);
+      localStorage.setItem(ACADEMY_KEY, JSON.stringify(list));
+
+      if (parseInt(document.getElementById('acadEditIndex').value, 10) === index) {
+        cancelEditAcademy();
+      }
+      renderManageLists();
+    }
+
+    // =========================================================================
+    // RENDER DAFTAR KELOLA (EDIT & HAPUS) DI BAGIAN BAWAH
+    // =========================================================================
+    function renderManageLists() {
+      const acadContainer = document.getElementById('manageAcademyList');
+      const oprekContainer = document.getElementById('manageOprekList');
+
+      const acadList = JSON.parse(localStorage.getItem(ACADEMY_KEY)) || [];
+      const oprekList = JSON.parse(localStorage.getItem(OPREK_KEY)) || [];
+
+      acadContainer.innerHTML = acadList.length === 0
+        ? `<p class="text-xs text-gray-400 italic bg-[#FAF8F5] p-4 rounded-2xl border border-dashed border-gray-200">Belum ada publikasi di jalur ini.</p>`
+        : acadList.map((item, idx) => `
+          <div class="p-3.5 bg-[#FAF8F5] rounded-2xl border border-[#234E58]/20 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 overflow-hidden">
+              <img src="${escapeHtmlSafe(item.imageUrl || DEFAULT_ACAD_IMG)}" alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0 border border-gray-200">
+              <div class="overflow-hidden">
+                <span class="text-[10px] font-bold text-[#234E58] bg-[#CAEAFF] px-2 py-0.5 rounded-full">${escapeHtmlSafe(item.kategori)}</span>
+                <h4 class="font-bold text-xs text-[#2D5B66] truncate mt-1">${escapeHtmlSafe(item.judul)}</h4>
+                <p class="text-[11px] text-gray-500 truncate">Batas: ${escapeHtmlSafe(item.batasWaktu)} • ${escapeHtmlSafe(item.targetAngkatan)}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" onclick="startEditAcademy(${idx})" title="Edit Kegiatan"
+                      class="bg-[#FFEDAC] hover:bg-[#f5dc82] text-[#2D5B66] border border-[#32566D] px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+              <button type="button" onclick="deleteAcademyItem(${idx})" title="Hapus Kegiatan"
+                      class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+      oprekContainer.innerHTML = oprekList.length === 0
+        ? `<p class="text-xs text-gray-400 italic bg-[#FAF8F5] p-4 rounded-2xl border border-dashed border-gray-200">Belum ada publikasi di jalur ini.</p>`
+        : oprekList.map((item, idx) => `
+          <div class="p-3.5 bg-[#FAF8F5] rounded-2xl border border-[#3B7A87]/20 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 overflow-hidden">
+              <img src="${escapeHtmlSafe(item.imageUrl || DEFAULT_OPREK_IMG)}" alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0 border border-gray-200">
+              <div class="overflow-hidden">
+                <span class="text-[10px] font-bold text-[#2D5B66] bg-[#EFE7D3] px-2 py-0.5 rounded-full">${escapeHtmlSafe(item.kategori)}</span>
+                <h4 class="font-bold text-xs text-[#2D5B66] truncate mt-1">${escapeHtmlSafe(item.judul)}</h4>
+                <p class="text-[11px] text-gray-500 truncate">Batas: ${escapeHtmlSafe(item.batasWaktu)} • ${escapeHtmlSafe(item.targetAngkatan)}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" onclick="startEditOprek(${idx})" title="Edit Kegiatan"
+                      class="bg-[#CAEAFF] hover:bg-[#8ABBDA] text-[#2D5B66] border border-[#32566D] px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+              <button type="button" onclick="deleteOprekItem(${idx})" title="Hapus Kegiatan"
+                      class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderManageLists);
+    window.addEventListener('storage', (e) => {
+      if (e.key === OPREK_KEY || e.key === ACADEMY_KEY) renderManageLists();
+    });
+  </script>
+</body>
+</html>
